@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#080A10" />
+  <!-- Diamond gem crown motif -->
+  <path d="M32 12 L44 24 L32 52 L20 24 Z" fill="none" stroke="#1E82FF" stroke-width="2.5" stroke-linejoin="round" />
+  <path d="M20 24 L44 24" stroke="#1E82FF" stroke-width="2.5" />
+  <path d="M26 18 L32 24 L38 18" stroke="#C8A864" stroke-width="2.5" stroke-linejoin="round" fill="none" />
+  <path d="M32 24 L32 52" stroke="#50B4FF" stroke-width="1.2" opacity="0.5" />
+</svg>

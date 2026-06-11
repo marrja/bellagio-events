@@ -1,0 +1,184 @@
+{
+  "brand": { "name": "Bellagio Event's" },
+  "nav": {
+    "home": "Accueil",
+    "venues": "Nos espaces",
+    "packages": "Formules",
+    "events": "Événements",
+    "gallery": "Galerie",
+    "about": "À propos",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "cta": {
+    "discoverSpaces": "Découvrir nos espaces",
+    "requestVisit": "Demander une visite",
+    "bookVisit": "Réserver une visite",
+    "seePackages": "Voir les formules",
+    "seeAllPackages": "Voir toutes nos formules",
+    "requestQuote": "Demander un devis",
+    "seeFullGallery": "Voir la galerie complète",
+    "learnMore": "En savoir plus",
+    "contactUs": "Contactez-nous",
+    "next": "Suivant",
+    "back": "Retour",
+    "submit": "Envoyer ma demande",
+    "submitting": "Envoi en cours…"
+  },
+  "common": {
+    "from": "à partir de",
+    "guests": "invités",
+    "upToGuests": "Jusqu'à {{count}} invités",
+    "capacity": "Capacité",
+    "area": "Superficie",
+    "ceiling": "Hauteur",
+    "features": "Caractéristiques",
+    "perDay": "par jour",
+    "loading": "Chargement…",
+    "language": "Langue"
+  },
+  "home": {
+    "heroTitle": "Trois espaces. Une vision.",
+    "heroSubtitle": "Mariages · Événements · Célébrations",
+    "venuesTitle": "Nos espaces",
+    "venuesIntro": "Trois écrins distincts, une même exigence d'excellence.",
+    "packagesTitle": "Nos formules",
+    "packagesIntro": "De la location simple au tout-inclus Prestige.",
+    "galleryTitle": "Galerie",
+    "galleryIntro": "Un aperçu de nos célébrations.",
+    "testimonialsTitle": "Ils nous ont fait confiance",
+    "ctaBannerTitle": "Votre célébration commence ici.",
+    "ctaBannerText": "Contactez-nous pour une visite guidée."
+  },
+  "venuesPage": {
+    "title": "Nos espaces",
+    "intro": "Trois lieux d'exception pour donner vie à votre événement."
+  },
+  "venue": {
+    "atmosphereTitle": "Atmosphère",
+    "aboutTitle": "L'espace",
+    "eventsTitle": "Types d'événements",
+    "packagesTitle": "Formules pour cet espace",
+    "enquiryTitle": "Réservez cet espace",
+    "enquiryIntro": "Dites-nous en plus sur votre projet — nous revenons vers vous sous 48 h.",
+    "otherVenuesTitle": "Découvrez nos autres espaces"
+  },
+  "packagesPage": {
+    "title": "Nos formules",
+    "intro": "Quatre niveaux de prestation, disponibles dans nos trois espaces.",
+    "inclusions": "Prestations incluses",
+    "compareTitle": "Comparer les formules"
+  },
+  "eventsPage": {
+    "title": "Types d'événements",
+    "intro": "Filtrez par espace et par type d'événement.",
+    "allVenues": "Tous les espaces",
+    "allTypes": "Tous les types"
+  },
+  "galleryPage": {
+    "title": "Galerie photos & vidéos",
+    "intro": "Découvrez nos espaces en images.",
+    "filterVenue": "Espace",
+    "filterType": "Type",
+    "all": "Tout",
+    "empty": "Aucun média ne correspond à ce filtre."
+  },
+  "filters": {
+    "wedding": "Mariage",
+    "corporate": "Corporate",
+    "gala": "Gala",
+    "garden": "Jardin",
+    "cocktail": "Cocktail",
+    "other": "Autre"
+  },
+  "about": {
+    "title": "À propos",
+    "intro": "Un domaine pensé pour l'événement d'exception.",
+    "storyTitle": "Notre histoire",
+    "story1": "Bellagio Event's est né d'une conviction : un grand événement mérite un grand lieu. Sur notre domaine, l'architecture contemporaine, la lumière et la nature se conjuguent pour offrir un cadre à la hauteur des plus beaux moments d'une vie.",
+    "story2": "Depuis notre ouverture, nous avons accueilli mariages, galas, lancements et célébrations privées avec une même exigence : que chaque détail serve l'émotion. Trois espaces, une équipe dédiée, et l'obsession du sur-mesure.",
+    "valuesTitle": "Nos valeurs",
+    "value1Title": "Excellence",
+    "value1Text": "Une production digne des plus grandes scènes, dans chaque détail.",
+    "value2Title": "Sur-mesure",
+    "value2Text": "Votre vision d'abord. Nous l'orchestrons, sans compromis.",
+    "value3Title": "Sérénité",
+    "value3Text": "Une équipe qui anticipe, pour que vous viviez l'instant."
+  },
+  "faqPage": {
+    "title": "Questions fréquentes",
+    "intro": "Tout ce qu'il faut savoir pour planifier votre événement."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "intro": "Réservez une visite ou demandez un devis personnalisé.",
+    "step1": "Votre événement",
+    "step2": "Vos coordonnées",
+    "step3": "Récapitulatif",
+    "stepOf": "Étape {{current}} sur {{total}}",
+    "fields": {
+      "venues": "Quel(s) espace(s) vous intéresse(nt) ?",
+      "eventType": "Type d'événement",
+      "tier": "Formule souhaitée",
+      "date": "Date de l'événement",
+      "guests": "Nombre d'invités",
+      "notes": "Précisions (facultatif)",
+      "notesPlaceholder": "Parlez-nous de votre projet…",
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "phone": "Téléphone",
+      "source": "Comment nous avez-vous connus ?",
+      "preferredContact": "Méthode de contact préférée",
+      "consent": "J'accepte que mes données soient utilisées pour traiter ma demande."
+    },
+    "eventTypes": {
+      "mariage": "Mariage",
+      "corporate": "Corporate",
+      "gala": "Gala",
+      "prive": "Privé",
+      "autre": "Autre"
+    },
+    "tierUnsure": "Je ne sais pas encore",
+    "sources": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "google": "Recherche Google",
+      "wordofmouth": "Bouche à oreille",
+      "other": "Autre"
+    },
+    "contactMethods": {
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "whatsapp": "WhatsApp"
+    },
+    "reviewTitle": "Vérifiez votre demande",
+    "blockedDate": "Cette date n'est pas disponible.",
+    "errors": {
+      "venuesRequired": "Sélectionnez au moins un espace.",
+      "nameRequired": "Veuillez indiquer votre nom.",
+      "emailRequired": "Veuillez indiquer votre e-mail.",
+      "emailInvalid": "Adresse e-mail invalide.",
+      "consentRequired": "Vous devez accepter pour continuer.",
+      "submit": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
+  "merci": {
+    "title": "Merci, {{name}} !",
+    "text": "Votre demande a bien été reçue. Notre équipe revient vers vous sous 48 h.",
+    "reference": "Votre référence",
+    "backHome": "Retour à l'accueil"
+  },
+  "footer": {
+    "tagline": "Mariages · Événements · Célébrations",
+    "explore": "Explorer",
+    "follow": "Suivez-nous",
+    "contact": "Contact",
+    "hours": "Lun – Sam · 9h – 19h",
+    "rights": "Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

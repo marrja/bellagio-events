@@ -1,0 +1,154 @@
+/* ============================================================
+   BELLAGIO EVENT'S — "Diamond Glow" design system
+   Fonts via Google Fonts @import, brand tokens as CSS custom props
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ---- Brand color tokens ---- */
+  --black: #080a10; /* primary background */
+  --deep: #0d1520; /* panel / card background */
+  --surface: #121e30; /* elevated surface */
+  --electric: #1e82ff; /* primary accent, CTAs, active states */
+  --electric-lt: #50b4ff; /* hover, glow halos */
+  --electric-dim: #1060cc; /* pressed / active */
+  --gold: #c8a864; /* secondary accent, typography flourishes */
+  --gold-lt: #dcc078; /* gold highlights */
+  --gold-dk: #8c6e37; /* gold shadows */
+  --white: #fafaff; /* primary text on dark */
+  --silver: #b4bcc8; /* secondary text, labels */
+  --smoke: #8c94a2; /* body copy, descriptions */
+
+  /* Active venue accent — overridden per venue page via inline style */
+  --accent: var(--electric);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-black text-white font-body font-light antialiased;
+    margin: 0;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* RTL support for Arabic */
+  html[dir='rtl'] body {
+    direction: rtl;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-light;
+    line-height: 1.1;
+  }
+
+  ::selection {
+    background: rgba(30, 130, 255, 0.3);
+    color: var(--white);
+  }
+
+  /* Custom scrollbar — subtle, on-brand */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--electric-dim);
+  }
+}
+
+@layer components {
+  /* Uppercase tracked label — nav, tags, CTAs, pills */
+  .label {
+    @apply font-body font-semibold uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  /* Thin vertical LED separator line */
+  .led-line {
+    width: 1px;
+    background: rgba(30, 130, 255, 0.15);
+  }
+
+  /* Gold horizontal rule — section dividers, table borders */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--gold) 20%,
+      var(--gold) 80%,
+      transparent
+    );
+  }
+
+  /* Blue glow halo behind hero text / active items */
+  .glow-halo {
+    position: relative;
+  }
+  .glow-halo::before {
+    content: '';
+    position: absolute;
+    inset: -20% -10%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(30, 130, 255, 0.22),
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Low-quality blur placeholder for hero images */
+  .img-blur-up {
+    filter: blur(20px);
+    transform: scale(1.05);
+    transition: filter 600ms ease-out, transform 600ms ease-out;
+  }
+  .img-blur-up.is-loaded {
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  /* Section container */
+  .container-bellagio {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

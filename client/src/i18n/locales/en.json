@@ -1,0 +1,184 @@
+{
+  "brand": { "name": "Bellagio Event's" },
+  "nav": {
+    "home": "Home",
+    "venues": "Our spaces",
+    "packages": "Packages",
+    "events": "Events",
+    "gallery": "Gallery",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "cta": {
+    "discoverSpaces": "Discover our spaces",
+    "requestVisit": "Request a visit",
+    "bookVisit": "Book a visit",
+    "seePackages": "See packages",
+    "seeAllPackages": "See all packages",
+    "requestQuote": "Request a quote",
+    "seeFullGallery": "See the full gallery",
+    "learnMore": "Learn more",
+    "contactUs": "Contact us",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Send my enquiry",
+    "submitting": "Sending…"
+  },
+  "common": {
+    "from": "from",
+    "guests": "guests",
+    "upToGuests": "Up to {{count}} guests",
+    "capacity": "Capacity",
+    "area": "Area",
+    "ceiling": "Ceiling",
+    "features": "Features",
+    "perDay": "per day",
+    "loading": "Loading…",
+    "language": "Language"
+  },
+  "home": {
+    "heroTitle": "Three spaces. One vision.",
+    "heroSubtitle": "Weddings · Events · Celebrations",
+    "venuesTitle": "Our spaces",
+    "venuesIntro": "Three distinct settings, one standard of excellence.",
+    "packagesTitle": "Our packages",
+    "packagesIntro": "From venue-only to the all-inclusive Prestige.",
+    "galleryTitle": "Gallery",
+    "galleryIntro": "A glimpse of our celebrations.",
+    "testimonialsTitle": "They trusted us",
+    "ctaBannerTitle": "Your celebration begins here.",
+    "ctaBannerText": "Contact us for a guided visit."
+  },
+  "venuesPage": {
+    "title": "Our spaces",
+    "intro": "Three exceptional venues to bring your event to life."
+  },
+  "venue": {
+    "atmosphereTitle": "Atmosphere",
+    "aboutTitle": "The space",
+    "eventsTitle": "Event types",
+    "packagesTitle": "Packages for this space",
+    "enquiryTitle": "Book this space",
+    "enquiryIntro": "Tell us about your project — we reply within 48 hours.",
+    "otherVenuesTitle": "Discover our other spaces"
+  },
+  "packagesPage": {
+    "title": "Our packages",
+    "intro": "Four service levels, available across our three spaces.",
+    "inclusions": "What's included",
+    "compareTitle": "Compare packages"
+  },
+  "eventsPage": {
+    "title": "Event types",
+    "intro": "Filter by space and event type.",
+    "allVenues": "All spaces",
+    "allTypes": "All types"
+  },
+  "galleryPage": {
+    "title": "Photo & video gallery",
+    "intro": "Discover our spaces in pictures.",
+    "filterVenue": "Space",
+    "filterType": "Type",
+    "all": "All",
+    "empty": "No media matches this filter."
+  },
+  "filters": {
+    "wedding": "Wedding",
+    "corporate": "Corporate",
+    "gala": "Gala",
+    "garden": "Garden",
+    "cocktail": "Cocktail",
+    "other": "Other"
+  },
+  "about": {
+    "title": "About",
+    "intro": "An estate built for the exceptional event.",
+    "storyTitle": "Our story",
+    "story1": "Bellagio Event's was born of one conviction: a great event deserves a great place. On our estate, contemporary architecture, light and nature combine to offer a setting worthy of life's most beautiful moments.",
+    "story2": "Since opening, we have hosted weddings, galas, launches and private celebrations with the same demand: that every detail serves the emotion. Three spaces, one dedicated team, and an obsession with the bespoke.",
+    "valuesTitle": "Our values",
+    "value1Title": "Excellence",
+    "value1Text": "Production worthy of the biggest stages, in every detail.",
+    "value2Title": "Bespoke",
+    "value2Text": "Your vision first. We orchestrate it, without compromise.",
+    "value3Title": "Serenity",
+    "value3Text": "A team that anticipates, so you can live the moment."
+  },
+  "faqPage": {
+    "title": "Frequently asked questions",
+    "intro": "Everything you need to plan your event."
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "Book a visit or request a tailored quote.",
+    "step1": "Your event",
+    "step2": "Your details",
+    "step3": "Review",
+    "stepOf": "Step {{current}} of {{total}}",
+    "fields": {
+      "venues": "Which space(s) interest you?",
+      "eventType": "Event type",
+      "tier": "Preferred package",
+      "date": "Event date",
+      "guests": "Guest count",
+      "notes": "Additional notes (optional)",
+      "notesPlaceholder": "Tell us about your project…",
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone",
+      "source": "How did you hear about us?",
+      "preferredContact": "Preferred contact method",
+      "consent": "I agree that my data may be used to process my enquiry."
+    },
+    "eventTypes": {
+      "mariage": "Wedding",
+      "corporate": "Corporate",
+      "gala": "Gala",
+      "prive": "Private",
+      "autre": "Other"
+    },
+    "tierUnsure": "Not sure yet",
+    "sources": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "google": "Google search",
+      "wordofmouth": "Word of mouth",
+      "other": "Other"
+    },
+    "contactMethods": {
+      "email": "Email",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp"
+    },
+    "reviewTitle": "Review your enquiry",
+    "blockedDate": "This date is not available.",
+    "errors": {
+      "venuesRequired": "Select at least one space.",
+      "nameRequired": "Please enter your name.",
+      "emailRequired": "Please enter your email.",
+      "emailInvalid": "Invalid email address.",
+      "consentRequired": "You must agree to continue.",
+      "submit": "Something went wrong. Please try again."
+    }
+  },
+  "merci": {
+    "title": "Thank you, {{name}}!",
+    "text": "Your enquiry has been received. Our team will get back to you within 48 hours.",
+    "reference": "Your reference",
+    "backHome": "Back to home"
+  },
+  "footer": {
+    "tagline": "Weddings · Events · Celebrations",
+    "explore": "Explore",
+    "follow": "Follow us",
+    "contact": "Contact",
+    "hours": "Mon – Sat · 9am – 7pm",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for doesn't exist or has been moved.",
+    "back": "Back to home"
+  }
+}
