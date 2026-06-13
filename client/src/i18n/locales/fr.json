@@ -1,5 +1,7 @@
 {
-  "brand": { "name": "Bellagio Event's" },
+  "brand": {
+    "name": "Bellagio Event's"
+  },
   "nav": {
     "home": "Accueil",
     "venues": "Nos espaces",
@@ -168,7 +170,9 @@
       "emailInvalid": "Adresse e-mail invalide.",
       "consentRequired": "Vous devez accepter pour continuer.",
       "submit": "Une erreur est survenue. Veuillez réessayer."
-    }
+    },
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant"
   },
   "merci": {
     "title": "Merci, {{name}} !",

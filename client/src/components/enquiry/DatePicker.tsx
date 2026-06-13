@@ -72,7 +72,7 @@ export function DatePicker({
           type="button"
           onClick={() => shiftMonth(-1)}
           className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-gold/10 hover:text-ink"
-          aria-label="−"
+          aria-label={t('contact.prevMonth')}
         >
           ‹
         </button>
@@ -81,7 +81,7 @@ export function DatePicker({
           type="button"
           onClick={() => shiftMonth(1)}
           className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-gold/10 hover:text-ink"
-          aria-label="+"
+          aria-label={t('contact.nextMonth')}
         >
           ›
         </button>
