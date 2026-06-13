@@ -86,7 +86,7 @@ export function SiteFooter() {
             <GemIcon size={12} color="var(--gold)" />
             © {year} Bellagio Event's. {t('footer.rights')}
           </p>
-          <p className="label text-[0.64rem] text-pearl/40">{t('home.heroSubtitle')}</p>
+          <p className="label text-[0.64rem] text-pearl/40">{t('footer.tagline')}</p>
         </div>
       </div>
     </footer>

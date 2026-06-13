@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
 import type { Venue } from '@/data/types'
+import { GALLERY } from '@/data/gallery'
 import { LazyImage } from '@/components/ui/LazyImage'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal } from '@/components/ui/Reveal'
@@ -34,7 +35,10 @@ export function VenueAtmosphere({ venue }: { venue: Venue }) {
         <div className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-3 sm:grid-rows-2 sm:overflow-visible sm:pb-0">
           {images.map((src, i) => {
             const shape = SHAPES[i % SHAPES.length]
-            const eventName = venue.events[i % venue.events.length]?.name
+            // Use the curated gallery caption for this exact image, never an
+            // arbitrary pairing; fall back to the venue name.
+            const caption = GALLERY.find((g) => g.src === src)?.caption
+            const label = caption ? L(caption) : L(venue.name)
             return (
               <div
                 key={src}
@@ -45,7 +49,7 @@ export function VenueAtmosphere({ venue }: { venue: Venue }) {
               >
                 <LazyImage
                   src={src}
-                  alt={`${L(venue.name)} — ${L(eventName)}`}
+                  alt={label}
                   width={shape.ratio[0] * 200}
                   height={shape.ratio[1] * 200}
                   sizes="(max-width: 640px) 78vw, 33vw"
@@ -60,7 +64,7 @@ export function VenueAtmosphere({ venue }: { venue: Venue }) {
                   }}
                 />
                 <span className="label absolute bottom-4 start-4 translate-y-2 text-[0.64rem] text-pearl opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  {L(eventName)}
+                  {label}
                 </span>
               </div>
             )

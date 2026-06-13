@@ -1,93 +1,91 @@
 # BELLAGIO EVENT'S — Website
 
 Official website for **BELLAGIO EVENT'S**, a premium wedding and events venue
-in Tunisia. Three distinct venue spaces, trilingual (FR · AR · EN), built on
-the **"Diamond Glow"** design system — electric blue, champagne gold and deep
-black, with the diamond gem motif throughout.
+in Tunisia, with two spaces: **La Salle Bellagio** (grand indoor hall) and
+**Le Jardin Bellagio** (outdoor garden). Trilingual (FR · AR · EN, RTL-aware),
+built on the **"Champagne & Light"** design system — luminous ivory and
+champagne gold with dramatic starlit dark sections, matching the venue's real
+photography (fairy lights, crystal, the kosha, the gold BB-diamond monogram).
 
-> **Status:** Front-end (React SPA) is complete and self-contained. The Payload
-> CMS + Express API layer is intentionally deferred — see [CMS](#cms-deferred).
+> **Status:** Front-end (React SPA) — complete and self-contained.
+> The CMS / backend layer is intentionally deferred; the client degrades
+> gracefully (see [Backend](#backend-deferred)).
 
 ## Tech stack
 
-- **React 18 + TypeScript**, scaffolded with **Vite**
+- **React 18 + TypeScript**, Vite
 - **React Router v6** (`createBrowserRouter`, nested layout via `<Outlet>`)
 - **Tailwind CSS v3** + CSS custom properties for brand tokens
-- **Framer Motion** — page transitions, scroll reveals, hover states
-- **React Hook Form patterns + Zod** validation for the enquiry wizard
-- **Zustand** — enquiry builder + language state
-- **react-i18next** — FR (default) / EN / AR with RTL support
-- **react-helmet-async** — per-page SEO + JSON-LD structured data
-- **Plausible** analytics snippet (privacy-first, no cookie banner)
+- **Framer Motion** — hero word-reveals, scroll-linked parallax, transitions
+- **Lenis** — momentum smooth-scrolling (reduced-motion aware)
+- **Zod** validation, **Zustand** enquiry state
+- **react-i18next** — FR (default) / EN / AR with RTL + Arabic fonts (Amiri, Tajawal)
+- **react-helmet-async** — per-page SEO, JSON-LD, hreflang
+- **Plausible** analytics (+ custom events: `Enquiry`, `WhatsApp Click`, `Call Click`)
 
 ## Getting started
 
 ```bash
 cd client
 npm install
-cp .env.example .env   # optional: configure VITE_API_BASE, VITE_CLOUDINARY_CLOUD
 npm run dev            # http://localhost:5173
 ```
-
-From the repo root you can also run `npm run dev` / `npm run build`
-(npm workspace → `client`).
-
-### Scripts
 
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Vite dev server |
-| `npm run build` | Type-check (`tsc -b`) + production build |
+| `npm run build` | Type-check + build + generate per-route static shells |
 | `npm run preview` | Preview the production build |
 | `npm run lint` | ESLint |
-
-## Project structure
-
-```
-client/src/
-  pages/        # route-level components (lazy-loaded)
-  components/   # ui · venue · enquiry · layout
-  hooks/        # useVenue, useAvailability, useScrollReveal, useL
-  store/        # Zustand: enquiryStore, languageStore
-  i18n/         # react-i18next setup + fr/en/ar locale files
-  lib/          # api (typed fetch), cloudinary, jsonld, enquirySchema
-  data/         # seed content (venues, tiers, gallery, faq, testimonials)
-  styles/       # Tailwind + brand tokens + fonts
-deploy/nginx.conf  # SPA fallback + API/admin reverse proxy
-```
+| `node scripts/optimize-images.mjs` | Regenerate responsive WebP + LQIP from venue photos |
 
 ## Key design decisions
 
 - **Single API boundary** — all backend calls go through `lib/api.ts`
-  (constraint #12). Each endpoint tries the live API, then falls back to the
-  embedded seed data in `src/data/`, so the SPA is fully demonstrable while the
-  CMS is still being decided.
-- **The diamond gem** (`components/ui/GemIcon.tsx`) is a pure SVG with `size`
-  and `color` props — used as bullets, section markers, dividers and the hero
-  mark on every venue page. Never an image file (constraint #9).
-- **Cloudinary** (`lib/cloudinary.ts`) builds transformation URLs; image
-  dimensions are never hardcoded in components (constraint #8). Demo seed images
-  are absolute URLs and are passed through with sizing params.
-- **Code splitting** — every page is `React.lazy()` behind `<Suspense>`; Framer
-  Motion and the React vendor bundle are in their own chunks (main < 200 kB gz).
-- **SPA deep links** — `_redirects` (Netlify/Coolify) and `deploy/nginx.conf`
-  rewrite unknown paths to `index.html` (constraint #11).
+  (deduped + 5-min cached). Each endpoint tries the live API, then falls
+  back to embedded seed content in `src/data/`, so the SPA runs standalone.
+- **Honest contact pipeline** — with no backend, the enquiry wizard delivers
+  via **WhatsApp** (prefilled message, `lib/contact.ts`) instead of faking a
+  server submission. A floating WhatsApp/call button is on every page.
+- **Two translation layers, on purpose** — `i18n/locales/*.json` (via `t()`)
+  hold static UI chrome; `Localized {fr,en,ar}` objects in `src/data/` (via
+  `useL()`) hold content that the future CMS will deliver in the same shape.
+- **Images** — venue photography ships as pre-generated responsive WebP with
+  base64 LQIP blur-up (`scripts/optimize-images.mjs` → `data/lqip.ts`);
+  `lib/cloudinary.ts` resolves local refs, Unsplash URLs and Cloudinary IDs.
+  Heroes are prioritized `<img>`s with `srcset` + preload.
+- **SEO without SSR** — `scripts/generate-static-pages.mjs` writes a static
+  HTML shell per route (title/description/OG/canonical/hreflang) so non-JS
+  scrapers (WhatsApp, Facebook, Google) see correct metadata; the SPA takes
+  over on load. Language travels via `?lang=` and is preserved on share.
+- **Dates** — ISO strings are built from local date parts (never
+  `toISOString()`), avoiding the UTC+1 off-by-one for Tunisia.
 
 ## Routes
 
-`/` · `/nos-espaces` · `/espaces/:slug` · `/formules` · `/evenements` ·
-`/galerie` · `/a-propos` · `/faq` · `/contact` · `/contact/merci`
+`/` · `/nos-espaces` · `/espaces/la-salle` · `/espaces/le-jardin` ·
+`/formules` · `/evenements` · `/galerie` · `/a-propos` · `/faq` ·
+`/contact` · `/contact/merci`
 
-Venue slugs: `la-grande-salle`, `le-salon-prive`, `les-jardins`.
+## Deployment
 
-## CMS (deferred)
+Static SPA: serve `client/dist/` with directory-index resolution and an
+SPA fallback — `deploy/nginx.conf` (`try_files $uri $uri/ /index.html`)
+or Netlify-style hosting (`public/_redirects`). The generated per-route
+`index.html` shells must be served for their paths (both configs do).
 
-The Payload CMS v3 + Express API (collections for venues, packages, enquiries,
-availability, gallery, testimonials, settings; Resend email; admin roles) is
-**not yet implemented** — it will be designed in a follow-up. The client is
-already wired for it:
+## Backend (deferred)
 
-- `lib/api.ts` points at `VITE_API_BASE` (`/api`) and degrades gracefully.
-- Enquiry submissions return a local reference until the email/CMS pipeline is
-  connected.
-- `deploy/nginx.conf` already reverse-proxies `/api` and `/admin`.
+The CMS/API (venues, pricing, enquiries, availability, gallery,
+testimonials; confirmation emails; admin roles) is not yet implemented.
+The client is wired for it: `lib/api.ts` targets `VITE_API_BASE` (`/api`)
+and `deploy/nginx.conf` already reverse-proxies `/api` and `/admin`.
+
+## Before launch — content owner checklist
+
+- Replace placeholder **prices** (TND figures in `src/data/tiers.ts` /
+  `venues.ts` are illustrative, not the venue's real rates)
+- Replace placeholder **testimonials** (`src/data/testimonials.ts`)
+- Confirm **open bar vs. alcohol-free** wording in the SAVEUR tier & FAQ
+- Provide the real **logo** as SVG (current crest is a typographic stand-in)
+- Add real **garden photography** (outdoor imagery is stock)
