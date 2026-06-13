@@ -45,8 +45,9 @@ export function RevealText({ text, className, delay = 0, as = 'h1' }: RevealText
               },
             }}
           >
-            {word}
-            {i < words.length - 1 ? ' ' : ''}
+            {/* \u00A0: a plain trailing space inside an inline-block is
+                collapsed by the browser, so use a no-break space. */}
+            {i < words.length - 1 ? word + '\u00A0' : word}
           </motion.span>
         </span>
       ))}

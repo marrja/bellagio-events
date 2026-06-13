@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLanguageStore } from '@/store/languageStore'
+import { useL } from '@/hooks/useL'
 import { GemIcon } from '@/components/ui/GemIcon'
 
 interface DatePickerProps {
@@ -29,7 +29,7 @@ export function DatePicker({
   accentColor = 'var(--gold)',
 }: DatePickerProps) {
   const { t } = useTranslation()
-  const lang = useLanguageStore((s) => s.lang)
+  const { lang } = useL()
   const today = useMemo(() => {
     const d = new Date()
     d.setHours(0, 0, 0, 0)

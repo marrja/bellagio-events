@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
 import { useVenues } from '@/hooks/useVenue'
@@ -16,6 +17,20 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
   const { venues } = useVenues()
   const s = useEnquiryStore()
   const { isBlocked } = useAvailability(s.venues)
+
+  // Cap the guest slider at the largest selected venue's capacity
+  // (e.g. 500 when only La Salle is chosen). Falls back to the global max.
+  const maxGuests = useMemo(() => {
+    const selected = venues.filter((v) => s.venues.includes(v.slug))
+    if (selected.length === 0) return 600
+    return Math.max(...selected.map((v) => v.capacity))
+  }, [venues, s.venues])
+
+  // Clamp an already-chosen count if the venue selection shrinks.
+  useEffect(() => {
+    if (s.guestCount > maxGuests) s.set({ guestCount: maxGuests })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maxGuests])
 
   return (
     <div className="space-y-8">
@@ -88,15 +103,15 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
           id="guests"
           type="range"
           min={10}
-          max={600}
+          max={maxGuests}
           step={10}
-          value={s.guestCount}
+          value={Math.min(s.guestCount, maxGuests)}
           onChange={(e) => s.set({ guestCount: Number(e.target.value) })}
           className="w-full accent-gold"
         />
         <div className="mt-1 flex justify-between text-[0.64rem] text-faint">
           <span>10</span>
-          <span>600</span>
+          <span>{maxGuests}</span>
         </div>
       </div>
 

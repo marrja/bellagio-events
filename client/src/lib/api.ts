@@ -32,23 +32,34 @@ export class ApiError extends Error {
   }
 }
 
-/** Attempt a live request; resolve with fallback data if it fails. */
-async function withFallback<T>(
-  path: string,
-  fallback: () => T,
-  init?: RequestInit,
-): Promise<T> {
-  try {
-    const res = await fetch(`${API_BASE}${path}`, {
-      headers: { 'Content-Type': 'application/json' },
-      ...init,
-    })
-    if (!res.ok) throw new ApiError(`Request failed: ${path}`, res.status)
-    return (await res.json()) as T
-  } catch {
-    // CMS not wired up yet — serve embedded seed data.
-    return fallback()
-  }
+// In-flight + resolved promise cache, keyed by path. Several components
+// (header, cards, wizard…) read the same resources; without this, every
+// mount would issue its own request once the live API exists.
+const cache = new Map<string, Promise<unknown>>()
+const CACHE_TTL = 5 * 60_000
+
+/** Attempt a live request (deduped + cached); fall back to seed data. */
+function withFallback<T>(path: string, fallback: () => T): Promise<T> {
+  const hit = cache.get(path)
+  if (hit) return hit as Promise<T>
+
+  const promise = (async () => {
+    try {
+      const res = await fetch(`${API_BASE}${path}`, {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      if (!res.ok) throw new ApiError(`Request failed: ${path}`, res.status)
+      return (await res.json()) as T
+    } catch {
+      // CMS not wired up yet — serve embedded seed data.
+      return fallback()
+    }
+  })()
+
+  cache.set(path, promise)
+  // Expire so fresh CMS edits show up without a hard reload.
+  setTimeout(() => cache.delete(path), CACHE_TTL)
+  return promise
 }
 
 // ---- Venues -------------------------------------------------
