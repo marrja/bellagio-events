@@ -17,7 +17,7 @@ export default {
         },
         ink: '#2B241A',
         muted: '#6F6555',
-        faint: '#9A8F7C',
+        faint: '#756A57',
         noir: '#14110B',
         espresso: '#211A11',
         night: '#0F1620',

@@ -68,7 +68,7 @@ export function StepContact({ errors }: { errors: Record<string, string> }) {
                 type="button"
                 onClick={() => s.set({ preferredContact: m })}
                 aria-pressed={s.preferredContact === m}
-                className={`label flex-1 rounded-lg border px-2 py-3 text-[0.58rem] transition-colors duration-200 ${
+                className={`label flex-1 rounded-lg border px-2 py-3 text-[0.64rem] transition-colors duration-200 ${
                   s.preferredContact === m
                     ? 'border-gold bg-gold/10 text-gold-dk'
                     : 'border-gold/20 text-muted hover:text-ink'

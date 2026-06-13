@@ -94,7 +94,7 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
           onChange={(e) => s.set({ guestCount: Number(e.target.value) })}
           className="w-full accent-gold"
         />
-        <div className="mt-1 flex justify-between text-[0.58rem] text-faint">
+        <div className="mt-1 flex justify-between text-[0.64rem] text-faint">
           <span>10</span>
           <span>600</span>
         </div>

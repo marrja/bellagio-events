@@ -25,23 +25,11 @@ export default function Gallery() {
   const [items, setItems] = useState<GalleryItem[]>([])
   const [venueFilter, setVenueFilter] = useState<VenueSlug | 'all'>('all')
   const [typeFilter, setTypeFilter] = useState<GalleryEventType | 'all'>('all')
-  const [lightbox, setLightbox] = useState<GalleryItem | null>(null)
+  const [lbIndex, setLbIndex] = useState<number | null>(null)
 
   useEffect(() => {
     getGallery().then(setItems)
   }, [])
-
-  // Lock scroll + close on Escape when the lightbox is open.
-  useEffect(() => {
-    if (!lightbox) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setLightbox(null)
-    document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-    }
-  }, [lightbox])
 
   const filtered = items.filter(
     (it) =>
@@ -49,8 +37,30 @@ export default function Gallery() {
       (typeFilter === 'all' || it.eventTypes.includes(typeFilter)),
   )
 
+  const lightbox = lbIndex != null ? filtered[lbIndex] : null
+  const close = () => setLbIndex(null)
+  const step = (dir: number) =>
+    setLbIndex((i) => (i == null ? i : (i + dir + filtered.length) % filtered.length))
+
+  // Keyboard nav + scroll lock while the lightbox is open.
+  useEffect(() => {
+    if (lbIndex == null) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close()
+      else if (e.key === 'ArrowRight') step(1)
+      else if (e.key === 'ArrowLeft') step(-1)
+    }
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lbIndex, filtered.length])
+
   const chip = (active: boolean) =>
-    `label rounded-full border px-4 py-2 text-[0.58rem] transition-all duration-300 ${
+    `label rounded-full border px-4 py-2 text-[0.64rem] transition-all duration-300 ${
       active ? 'border-gold bg-gold/10 text-gold-dk' : 'border-gold/25 text-faint hover:text-ink'
     }`
 
@@ -121,7 +131,7 @@ export default function Gallery() {
                 >
                   <button
                     type="button"
-                    onClick={() => setLightbox(item)}
+                    onClick={() => setLbIndex(i)}
                     className="group block w-full overflow-hidden rounded-md"
                     aria-label={L(item.caption)}
                   >
@@ -150,19 +160,45 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onClick={() => setLightbox(null)}
+            onClick={close}
             role="dialog"
             aria-modal="true"
+            aria-label={L(lightbox.caption)}
           >
             <button
               type="button"
-              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-2xl text-pearl transition-colors hover:border-gold-lt hover:text-gold-lt"
+              className="absolute end-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-2xl text-pearl transition-colors hover:border-gold-lt hover:text-gold-lt"
               aria-label="Fermer"
-              onClick={() => setLightbox(null)}
+              autoFocus
+              onClick={close}
             >
               ×
             </button>
+            {/* Prev / next */}
+            <button
+              type="button"
+              className="absolute start-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-gold/40 text-2xl text-pearl transition-colors hover:border-gold-lt hover:text-gold-lt sm:start-6"
+              aria-label="Précédent"
+              onClick={(e) => {
+                e.stopPropagation()
+                step(-1)
+              }}
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="absolute end-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-gold/40 text-2xl text-pearl transition-colors hover:border-gold-lt hover:text-gold-lt sm:end-6"
+              aria-label="Suivant"
+              onClick={(e) => {
+                e.stopPropagation()
+                step(1)
+              }}
+            >
+              ›
+            </button>
             <motion.figure
+              key={lightbox.id}
               className="max-h-[88vh] max-w-5xl"
               initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

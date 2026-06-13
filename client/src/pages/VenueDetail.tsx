@@ -34,6 +34,8 @@ export default function VenueDetail() {
       <Seo
         title={`${L(venue.name)} — Bellagio Event's`}
         description={`${venue.capacity} invités · ${venue.area} · ${L(venue.features[0])}`}
+        ogImage={venue.heroImage}
+        preloadImage={venue.heroImage}
         jsonLd={[
           eventVenueJsonLd(venue, lang),
           breadcrumbJsonLd([

@@ -1,26 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import { buildImageUrl, buildSrcSet, type ImageOptions } from '@/lib/cloudinary'
+import { buildImageUrl, buildSrcSet, getLqip, type ImageOptions } from '@/lib/cloudinary'
 
 interface LazyImageProps {
-  /** Cloudinary public ID or absolute URL. */
   src: string
   alt: string
-  /** Intrinsic width/height to reserve layout space (avoid CLS). */
   width: number
   height: number
-  /** Responsive widths for the srcset. */
   widths?: number[]
   sizes?: string
   className?: string
-  /** Eager-load above-the-fold images (e.g. hero). */
+  /** Eager-load above-the-fold images (e.g. hero) + fetchpriority high. */
   eager?: boolean
   imgClassName?: string
   options?: ImageOptions
 }
 
 /**
- * <img> wrapper with Intersection Observer lazy-load + blur-up.
- * Reserves space via width/height to keep CLS at zero.
+ * <img> wrapper with Intersection Observer lazy-load + LQIP blur-up.
+ * Reserves space via width/height to keep CLS at zero. Local venue
+ * images get a base64 placeholder for an instant, smooth reveal.
  */
 export function LazyImage({
   src,
@@ -37,6 +35,7 @@ export function LazyImage({
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const [inView, setInView] = useState(eager)
   const [loaded, setLoaded] = useState(false)
+  const lqip = getLqip(src)
 
   useEffect(() => {
     if (eager || inView) return
@@ -49,7 +48,7 @@ export function LazyImage({
           obs.disconnect()
         }
       },
-      { rootMargin: '200px' },
+      { rootMargin: '300px' },
     )
     obs.observe(node)
     return () => obs.disconnect()
@@ -62,7 +61,16 @@ export function LazyImage({
     <div
       ref={wrapRef}
       className={`relative overflow-hidden bg-sand ${className ?? ''}`}
-      style={{ aspectRatio: `${width} / ${height}` }}
+      style={{
+        aspectRatio: `${width} / ${height}`,
+        ...(lqip && !loaded
+          ? {
+              backgroundImage: `url(${lqip})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }
+          : null),
+      }}
     >
       {inView && (
         <img
@@ -73,6 +81,8 @@ export function LazyImage({
           width={width}
           height={height}
           loading={eager ? 'eager' : 'lazy'}
+          // @ts-expect-error fetchpriority is valid HTML but not yet in React types
+          fetchpriority={eager ? 'high' : undefined}
           decoding="async"
           onLoad={() => setLoaded(true)}
           className={`img-blur-up h-full w-full object-cover ${

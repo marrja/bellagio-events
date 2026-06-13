@@ -31,21 +31,38 @@ export function SiteHeader() {
     setMenuOpen(false)
   }, [location.pathname])
 
+  // These routes open on a full-bleed dark hero, so the transparent header
+  // needs light text until the user scrolls onto the ivory background.
+  const hasDarkHero =
+    location.pathname === '/' || location.pathname.startsWith('/espaces/')
+  const solid = scrolled || menuOpen
+  const overDark = hasDarkHero && !solid
+
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `label text-[0.66rem] transition-colors duration-200 ${
-      isActive ? 'text-gold-dk' : 'text-muted hover:text-ink'
+      isActive
+        ? overDark
+          ? 'text-gold-lt'
+          : 'text-gold-dk'
+        : overDark
+          ? 'text-pearl/85 hover:text-pearl'
+          : 'text-muted hover:text-ink'
     }`
+
+  const barColor = overDark ? 'bg-pearl' : 'bg-ink'
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
-        scrolled || menuOpen
+        solid
           ? 'border-b border-gold/15 bg-ivory/90 backdrop-blur-md'
-          : 'bg-gradient-to-b from-ivory/80 to-transparent'
+          : hasDarkHero
+            ? 'bg-gradient-to-b from-noir/50 to-transparent'
+            : 'bg-gradient-to-b from-ivory/80 to-transparent'
       }`}
     >
       <div className="container-bellagio flex h-[76px] items-center justify-between">
-        <Logo />
+        <Logo dark={overDark} />
 
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
@@ -56,8 +73,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
-          <LanguageSwitcher />
-          <span className="h-5 w-px bg-gold/30" aria-hidden />
+          <LanguageSwitcher dark={overDark} />
+          <span className={`h-5 w-px ${overDark ? 'bg-pearl/30' : 'bg-gold/30'}`} aria-hidden />
           <GlowLink to="/contact" variant="primary" className="!px-6 !py-2.5">
             {t('cta.requestVisit')}
           </GlowLink>
@@ -71,9 +88,9 @@ export function SiteHeader() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
-          <span className={`block h-[1.5px] w-6 bg-ink transition-transform duration-300 ${menuOpen ? 'translate-y-[6.5px] rotate-45' : ''}`} />
-          <span className={`block h-[1.5px] w-6 bg-ink transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-[1.5px] w-6 bg-ink transition-transform duration-300 ${menuOpen ? '-translate-y-[6.5px] -rotate-45' : ''}`} />
+          <span className={`block h-[1.5px] w-6 ${barColor} transition-transform duration-300 ${menuOpen ? 'translate-y-[6.5px] rotate-45' : ''}`} />
+          <span className={`block h-[1.5px] w-6 ${barColor} transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-[1.5px] w-6 ${barColor} transition-transform duration-300 ${menuOpen ? '-translate-y-[6.5px] -rotate-45' : ''}`} />
         </button>
       </div>
 
@@ -84,11 +101,15 @@ export function SiteHeader() {
         }`}
       >
         <nav className="container-bellagio flex flex-col gap-1 py-5">
-          <NavLink to="/" className={linkClass} end>
+          <NavLink to="/" className={({ isActive }) => `label py-3 text-[0.66rem] ${isActive ? 'text-gold-dk' : 'text-muted hover:text-ink'}`} end>
             {t('nav.home')}
           </NavLink>
           {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} className={(s) => `${linkClass(s)} py-3`}>
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `label py-3 text-[0.66rem] ${isActive ? 'text-gold-dk' : 'text-muted hover:text-ink'}`}
+            >
               {t(item.key)}
             </NavLink>
           ))}

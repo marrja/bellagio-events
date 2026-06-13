@@ -49,7 +49,7 @@ export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
       className={`${fieldBase} appearance-none bg-[length:1rem] bg-[right_0.9rem_center] bg-no-repeat pr-10 ${props.className ?? ''}`}
       style={{
         backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239A8F7C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23756A57' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
         ...props.style,
       }}
     />

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useEnquiryStore } from '@/store/enquiryStore'
 import { enquirySchema, stepFields, type EnquiryInput } from '@/lib/enquirySchema'
 import { submitEnquiry } from '@/lib/api'
+import { track } from '@/lib/analytics'
 import type { VenueSlug } from '@/data/types'
 import { GemIcon } from '@/components/ui/GemIcon'
 import { GlowButton } from '@/components/ui/GlowButton'
@@ -79,8 +80,21 @@ export function EnquiryWizard() {
         eventDate: parsed.data.eventDate ?? '',
       })
       const name = store.name
+      track('Enquiry', {
+        delivered: res.delivered,
+        eventType: parsed.data.eventType,
+        venues: parsed.data.venues.join(','),
+      })
       store.reset()
-      navigate('/contact/merci', { state: { name, reference: res.reference } })
+      if (res.delivered === 'whatsapp') {
+        // Open WhatsApp with the prefilled enquiry, then confirm.
+        window.open(res.whatsappUrl, '_blank', 'noopener')
+        navigate('/contact/merci', {
+          state: { name, whatsappUrl: res.whatsappUrl },
+        })
+      } else {
+        navigate('/contact/merci', { state: { name, reference: res.reference } })
+      }
     } catch {
       setSubmitError(t('contact.errors.submit'))
       setSubmitting(false)
@@ -108,7 +122,7 @@ export function EnquiryWizard() {
                 >
                   {done ? <GemIcon size={14} color="var(--gold)" filled /> : i + 1}
                 </span>
-                <span className={`label hidden text-[0.52rem] sm:block ${active ? 'text-ink' : 'text-faint'}`}>
+                <span className={`label hidden text-[0.64rem] sm:block ${active ? 'text-ink' : 'text-faint'}`}>
                   {t(key)}
                 </span>
               </div>
@@ -120,7 +134,7 @@ export function EnquiryWizard() {
         })}
       </ol>
 
-      <p className="label mb-6 text-center text-[0.58rem] text-faint sm:hidden">
+      <p className="label mb-6 text-center text-[0.64rem] text-faint sm:hidden">
         {t('contact.stepOf', { current: step + 1, total: 3 })}
       </p>
 

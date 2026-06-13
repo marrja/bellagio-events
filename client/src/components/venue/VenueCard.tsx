@@ -44,7 +44,7 @@ export function VenueCard({ venue, eager }: VenueCardProps) {
         <div className="mb-3 -translate-y-2 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
           <GemIcon size={18} color="var(--gold-lt)" />
         </div>
-        <p className="label text-[0.58rem] text-gold-lt">{L(venue.subtitle)}</p>
+        <p className="label text-[0.64rem] text-gold-lt">{L(venue.subtitle)}</p>
         <h3 className="mt-1 font-display text-3xl font-light text-pearl">{L(venue.name)}</h3>
         <p className="mt-1 text-sm text-pearl/75">
           {t('common.upToGuests', { count: venue.capacity })} · {venue.area}

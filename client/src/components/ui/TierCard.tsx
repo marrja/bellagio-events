@@ -36,7 +36,7 @@ export function TierCard({
       style={{ '--accent': accentColor } as React.CSSProperties}
     >
       {highlight && (
-        <span className="label mb-3 inline-flex self-start rounded-full bg-gold/15 px-3 py-1 text-[0.55rem] text-gold-dk">
+        <span className="label mb-3 inline-flex self-start rounded-full bg-gold/15 px-3 py-1 text-[0.64rem] text-gold-dk">
           ★ {t('packagesPage.signature')}
         </span>
       )}

@@ -63,7 +63,7 @@ export default function Events() {
   )
 
   const chip = (active: boolean) =>
-    `label rounded-full border px-4 py-2 text-[0.58rem] transition-all duration-300 ${
+    `label rounded-full border px-4 py-2 text-[0.64rem] transition-all duration-300 ${
       active ? 'border-gold bg-gold/10 text-gold-dk' : 'border-gold/25 text-faint hover:text-ink'
     }`
 
@@ -130,7 +130,7 @@ export default function Events() {
                 <div className="absolute inset-x-0 bottom-0 p-5">
                   <div className="flex items-center gap-2">
                     <GemIcon size={13} color="var(--gold-lt)" />
-                    <span className="label text-[0.52rem] text-gold-lt">{e.venueName}</span>
+                    <span className="label text-[0.64rem] text-gold-lt">{e.venueName}</span>
                   </div>
                   <h3 className="mt-2 font-display text-xl text-pearl">{e.name}</h3>
                   <p className="mt-1 line-clamp-2 text-sm text-pearl/75">{e.description}</p>

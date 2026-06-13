@@ -5,6 +5,8 @@
    lights, illuminated butterfly, white florals, crystal glow.
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
+/* Arabic faces — Amiri (display serif) + Tajawal (body sans) */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,7 +28,7 @@
   /* ---- Ink / text ---- */
   --ink: #2b241a; /* primary text on light */
   --muted: #6f6555; /* body copy on light */
-  --faint: #9a8f7c; /* labels, captions on light */
+  --faint: #756a57; /* labels, captions on light (AA on ivory) */
 
   /* ---- Dark / starlit palette ---- */
   --noir: #14110b; /* dramatic dark section background */
@@ -200,6 +202,28 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+/* ---- Arabic / RTL typography (unlayered → wins over Tailwind utilities) ---- */
+html[dir='rtl'] body,
+html[dir='rtl'] .font-body,
+html[dir='rtl'] .font-label {
+  font-family: 'Tajawal', 'Segoe UI', sans-serif;
+}
+html[dir='rtl'] .font-display,
+html[dir='rtl'] h1,
+html[dir='rtl'] h2,
+html[dir='rtl'] h3,
+html[dir='rtl'] h4,
+/* No Latin script face for Arabic — fall back to the elegant serif */
+html[dir='rtl'] .font-script {
+  font-family: 'Amiri', 'Cormorant Garamond', serif;
+}
+/* Letter-spacing fragments connected Arabic script; uppercase is a no-op. */
+html[dir='rtl'] .label {
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
 }
 
 @keyframes shimmer {

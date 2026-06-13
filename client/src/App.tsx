@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/layout/SiteHeader'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { ScrollToTop } from '@/components/layout/ScrollToTop'
+import { FloatingContact } from '@/components/layout/FloatingContact'
 import { GemIcon } from '@/components/ui/GemIcon'
 
 function RouteFallback() {
@@ -31,6 +32,7 @@ export default function App() {
         </Suspense>
       </div>
       <SiteFooter />
+      <FloatingContact />
     </div>
   )
 }

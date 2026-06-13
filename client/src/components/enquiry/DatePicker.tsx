@@ -10,7 +10,16 @@ interface DatePickerProps {
   accentColor?: string
 }
 
-const toIso = (d: Date) => d.toISOString().slice(0, 10)
+// Build an ISO date string from LOCAL parts. Using toISOString() here would
+// shift the day backwards for any timezone east of UTC (e.g. Tunisia, UTC+1).
+const toIso = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+
+// Parse an ISO date as LOCAL midnight (not UTC) for display.
+const fromIso = (iso: string) => {
+  const [y, m, d] = iso.split('-').map(Number)
+  return new Date(y, m - 1, d)
+}
 
 /** Month-grid date picker. Blocked dates (from CMS availability) are greyed. */
 export function DatePicker({
@@ -27,7 +36,7 @@ export function DatePicker({
     return d
   }, [])
   const [view, setView] = useState(() => {
-    const base = value ? new Date(value) : new Date()
+    const base = value ? fromIso(value) : new Date()
     return new Date(base.getFullYear(), base.getMonth(), 1)
   })
 
@@ -80,7 +89,7 @@ export function DatePicker({
 
       <div className="mb-2 grid grid-cols-7 gap-1 text-center">
         {weekdays.map((w) => (
-          <span key={w} className="label text-[0.52rem] text-faint">
+          <span key={w} className="label text-[0.64rem] text-faint">
             {w}
           </span>
         ))}
@@ -123,7 +132,7 @@ export function DatePicker({
       {value && (
         <p className="mt-3 flex items-center gap-2 text-xs text-muted">
           <GemIcon size={11} color={accentColor} />
-          {new Date(value).toLocaleDateString(locale, {
+          {fromIso(value).toLocaleDateString(locale, {
             weekday: 'long',
             day: 'numeric',
             month: 'long',

@@ -21,6 +21,7 @@ import { TIERS, PACKAGE_PRICES } from '@/data/tiers'
 import { TESTIMONIALS } from '@/data/testimonials'
 import { GALLERY } from '@/data/gallery'
 import { FAQ } from '@/data/faq'
+import { buildEnquiryWhatsApp, whatsappUrl } from '@/lib/contact'
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? '/api'
 
@@ -65,8 +66,11 @@ export const getPackagePrices = () =>
   withFallback('/pricing', () => PACKAGE_PRICES)
 
 // ---- Availability ------------------------------------------
+// Until the CMS is connected we return NO blocked dates rather than
+// fabricating "booked" days — showing fake unavailability would turn
+// real couples away. The date picker still disables past dates.
 export const getAvailability = (slug: VenueSlug): Promise<BlockedDate[]> =>
-  withFallback(`/availability?venue=${slug}`, () => mockBlockedDates(slug))
+  withFallback(`/availability?venue=${slug}`, () => [])
 
 // ---- Gallery -----------------------------------------------
 export const getGallery = (): Promise<GalleryItem[]> =>
@@ -101,10 +105,11 @@ export interface EnquiryPayload {
   consent: boolean
 }
 
-export interface EnquiryResult {
-  ok: boolean
-  reference: string
-}
+// Result discriminates how the enquiry was actually delivered, so the UI
+// never claims a server received it when no backend exists yet.
+export type EnquiryResult =
+  | { delivered: 'api'; reference: string }
+  | { delivered: 'whatsapp'; whatsappUrl: string }
 
 export async function submitEnquiry(
   payload: EnquiryPayload,
@@ -116,37 +121,14 @@ export async function submitEnquiry(
       body: JSON.stringify(payload),
     })
     if (!res.ok) throw new ApiError('Enquiry submission failed', res.status)
-    return (await res.json()) as EnquiryResult
+    const data = (await res.json()) as { reference: string }
+    return { delivered: 'api', reference: data.reference }
   } catch {
-    // Optimistic local fallback while the email/CMS pipeline is pending.
-    // We still surface a reference so the thank-you page can render.
-    await new Promise((r) => setTimeout(r, 700))
-    const reference = `BLG-${Date.now().toString(36).toUpperCase().slice(-6)}`
-    if (import.meta.env.DEV) {
-      console.info('[enquiry — local fallback]', { reference, payload })
-    }
-    return { ok: true, reference }
-  }
-}
-
-// ---- Mock availability generator ---------------------------
-// Deterministic-ish blocked dates per venue so the date picker has
-// something to grey out until real CMS availability is connected.
-function mockBlockedDates(slug: VenueSlug): BlockedDate[] {
-  const out: BlockedDate[] = []
-  const today = new Date()
-  const seed = slug.length * 7
-  for (let i = 0; i < 120; i++) {
-    const d = new Date(today)
-    d.setDate(today.getDate() + i)
-    // Block roughly every ~9th day, offset by a venue-specific seed.
-    if ((i + seed) % 9 === 0) {
-      out.push({
-        venueSlug: slug,
-        date: d.toISOString().slice(0, 10),
-        blockType: i % 2 === 0 ? 'booked' : 'private',
-      })
+    // No backend yet: deliver the enquiry through WhatsApp (this market's
+    // primary channel) instead of pretending a server accepted it.
+    return {
+      delivered: 'whatsapp',
+      whatsappUrl: whatsappUrl(buildEnquiryWhatsApp(payload)),
     }
   }
-  return out
 }

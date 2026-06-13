@@ -166,7 +166,10 @@
   },
   "merci": {
     "title": "Merci, {{name}} !",
+    "titleNoName": "Merci !",
     "text": "Votre demande a bien été reçue. Notre équipe revient vers vous sous 48 h.",
+    "whatsappText": "Nous avons préparé votre demande sur WhatsApp. Si rien ne s'est ouvert, cliquez ci-dessous — nous vous répondons en quelques minutes.",
+    "openWhatsApp": "Ouvrir WhatsApp",
     "reference": "Votre référence",
     "backHome": "Retour à l'accueil"
   },

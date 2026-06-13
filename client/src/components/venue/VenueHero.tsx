@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
 import type { Venue } from '@/data/types'
-import { buildImageUrl } from '@/lib/cloudinary'
+import { ParallaxImage } from '@/components/ui/ParallaxImage'
 import { GemIcon } from '@/components/ui/GemIcon'
 import { Butterfly } from '@/components/ui/Butterfly'
 import { FairyLights } from '@/components/ui/FairyLights'
@@ -13,31 +12,10 @@ import { GlowLink } from '@/components/ui/GlowButton'
 export function VenueHero({ venue }: { venue: Venue }) {
   const { t } = useTranslation()
   const { L } = useL()
-  const [offset, setOffset] = useState(0)
-
-  useEffect(() => {
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => setOffset(window.scrollY * 0.4))
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
 
   return (
     <section className="relative flex h-[100svh] min-h-[580px] items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 -z-10 scale-110 bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${buildImageUrl(venue.heroImage, { width: 1920 })})`,
-          transform: `translateY(${offset}px) scale(1.1)`,
-        }}
-        aria-hidden
-      />
+      <ParallaxImage src={venue.heroImage} alt="" priority strength={140} />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-noir/70 via-noir/45 to-noir/85" />
 
       <FairyLights count={23} className="absolute inset-x-0 top-24 opacity-80" />

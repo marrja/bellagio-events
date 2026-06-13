@@ -6,11 +6,11 @@ import { useVenues } from '@/hooks/useVenue'
 import { getFeaturedGallery, getTestimonials } from '@/lib/api'
 import type { GalleryItem, Testimonial } from '@/data/types'
 import { TIERS } from '@/data/tiers'
-import { buildImageUrl } from '@/lib/cloudinary'
 import { Seo } from '@/components/Seo'
 import { localBusinessJsonLd } from '@/lib/jsonld'
 import { VenueCard } from '@/components/venue/VenueCard'
 import { LazyImage } from '@/components/ui/LazyImage'
+import { ParallaxImage } from '@/components/ui/ParallaxImage'
 import { GemIcon } from '@/components/ui/GemIcon'
 import { Butterfly } from '@/components/ui/Butterfly'
 import { FairyLights } from '@/components/ui/FairyLights'
@@ -28,25 +28,10 @@ export default function Home() {
   const { venues } = useVenues()
   const [featured, setFeatured] = useState<GalleryItem[]>([])
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
-  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
     getFeaturedGallery().then(setFeatured)
     getTestimonials().then(setTestimonials)
-  }, [])
-
-  // Subtle hero parallax
-  useEffect(() => {
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => setOffset(window.scrollY * 0.35))
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
   }, [])
 
   return (
@@ -55,18 +40,12 @@ export default function Home() {
         title="Bellagio Event's — Salle de Mariage & Événements en Tunisie"
         description="Deux espaces d'exception — une salle de lumière et un jardin sous les étoiles — pour vos mariages, fiançailles et célébrations."
         jsonLd={localBusinessJsonLd()}
+        preloadImage={HERO_BG}
       />
 
       {/* [1] HERO */}
       <section className="relative flex h-[100svh] min-h-[620px] items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10 scale-110 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${buildImageUrl(HERO_BG, { width: 1920 })})`,
-            transform: `translateY(${offset}px) scale(1.1)`,
-          }}
-          aria-hidden
-        />
+        <ParallaxImage src={HERO_BG} alt="" priority strength={140} />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-noir/55 via-noir/35 to-noir/80" />
 
         <FairyLights count={27} className="absolute inset-x-0 top-24 opacity-90" />
@@ -205,7 +184,7 @@ export default function Home() {
                   <GemIcon size={14} color="var(--gold)" />
                   <span>
                     <span className="block text-sm text-ink">{tm.clientName}</span>
-                    <span className="label text-[0.58rem] text-faint">{L(tm.eventType)}</span>
+                    <span className="label text-[0.64rem] text-faint">{L(tm.eventType)}</span>
                   </span>
                 </figcaption>
               </figure>

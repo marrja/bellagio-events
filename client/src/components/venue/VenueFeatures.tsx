@@ -40,7 +40,7 @@ export function VenueFeatures({ venue }: { venue: Venue }) {
                 [t('common.ceiling'), L(venue.ceiling)],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-baseline justify-between gap-4">
-                  <dt className="label text-[0.58rem] text-faint">{k}</dt>
+                  <dt className="label text-[0.64rem] text-faint">{k}</dt>
                   <dd className="text-right font-display text-lg text-ink">{v}</dd>
                 </div>
               ))}

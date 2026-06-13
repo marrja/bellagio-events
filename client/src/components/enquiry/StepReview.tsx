@@ -18,7 +18,14 @@ export function StepReview({ errors }: { errors: Record<string, string> }) {
 
   const tierLabel = s.tier === 'unsure' ? t('contact.tierUnsure') : s.tier
   const dateLabel = s.eventDate
-    ? new Date(s.eventDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? (() => {
+        const [y, m, d] = s.eventDate.split('-').map(Number)
+        return new Date(y, m - 1, d).toLocaleDateString('fr-FR', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })
+      })()
     : '—'
 
   const rows: [string, string][] = [
@@ -39,7 +46,7 @@ export function StepReview({ errors }: { errors: Record<string, string> }) {
         <dl className="divide-y divide-gold/12">
           {rows.map(([k, v]) => (
             <div key={k} className="flex items-start justify-between gap-6 py-3 first:pt-0 last:pb-0">
-              <dt className="label text-[0.58rem] text-faint">{k}</dt>
+              <dt className="label text-[0.64rem] text-faint">{k}</dt>
               <dd className="max-w-[60%] text-right text-sm text-ink">{v}</dd>
             </div>
           ))}
