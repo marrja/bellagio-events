@@ -44,6 +44,21 @@
   color-scheme: light;
 }
 
+/* Lenis smooth-scroll requirements */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -179,6 +194,29 @@
   .section-noir {
     background-color: var(--noir);
     color: var(--pearl);
+  }
+
+  /* Sweeping light "shine" across primary CTAs on hover */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-160%) skewX(-20deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .shine:hover::after {
+    transform: translateX(160%) skewX(-20deg);
   }
 }
 

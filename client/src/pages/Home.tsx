@@ -19,6 +19,8 @@ import { GlowLink } from '@/components/ui/GlowButton'
 import { GoldRule } from '@/components/ui/GoldRule'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal } from '@/components/ui/Reveal'
+import { RevealText } from '@/components/ui/RevealText'
+import { motion } from 'framer-motion'
 
 const HERO_BG = '/venue/hall-aisle.jpg'
 
@@ -57,21 +59,34 @@ export default function Home() {
               <GemIcon size={30} color="var(--gold-lt)" />
               <Butterfly size={30} color="var(--gold-lt)" className="animate-float" />
             </div>
-            <h1 className="mt-6 text-balance font-display text-5xl font-light leading-[1.05] text-pearl sm:text-7xl lg:text-8xl">
-              {t('home.heroTitle')}
-            </h1>
-            <p className="mt-4 font-script text-3xl text-gold-lt sm:text-5xl">
+            <RevealText
+              as="h1"
+              text={t('home.heroTitle')}
+              delay={0.15}
+              className="mt-6 text-balance font-display text-5xl font-light leading-[1.05] text-pearl sm:text-7xl lg:text-8xl"
+            />
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-4 font-script text-3xl text-gold-lt sm:text-5xl"
+            >
               {t('home.heroSubtitle')}
-            </p>
+            </motion.p>
           </div>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 flex flex-wrap justify-center gap-4"
+          >
             <GlowLink to="/nos-espaces" variant="primary">
               {t('cta.discoverSpaces')}
             </GlowLink>
             <GlowLink to="/contact" variant="outlineLight">
               {t('cta.requestVisit')}
             </GlowLink>
-          </div>
+          </motion.div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-hint">
@@ -103,6 +118,76 @@ export default function Home() {
               <VenueCard venue={v} eager={i === 0} />
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* [3b] SIGNATURE — asymmetric editorial split */}
+      <section className="relative overflow-hidden bg-cream py-20 sm:py-28">
+        <div className="container-bellagio">
+          <div className="grid items-center gap-10 lg:grid-cols-12">
+            {/* Imagery */}
+            <div className="relative lg:col-span-7">
+              <Reveal variant="mask">
+                <LazyImage
+                  src="/venue/hall-kosha.jpg"
+                  alt={t('home.experienceTitle')}
+                  width={1080}
+                  height={760}
+                  className="rounded-2xl shadow-lift"
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                />
+              </Reveal>
+              {/* Overlapping accent image */}
+              <Reveal
+                variant="mask"
+                delay={180}
+                className="absolute -bottom-8 end-4 hidden w-44 sm:block lg:w-56"
+              >
+                <LazyImage
+                  src="/venue/table-setting.jpg"
+                  alt=""
+                  width={440}
+                  height={560}
+                  className="rounded-2xl border-4 border-cream shadow-lift"
+                  sizes="220px"
+                />
+              </Reveal>
+              {/* Vertical side label */}
+              <span
+                className="label absolute -start-3 top-1/2 hidden -translate-y-1/2 -rotate-90 text-[0.6rem] text-gold-dk lg:block"
+                aria-hidden
+              >
+                Bellagio Event's
+              </span>
+            </div>
+
+            {/* Copy */}
+            <div className="lg:col-span-5">
+              <Reveal>
+                <p className="label text-[0.64rem] text-gold-dk">{t('home.experienceEyebrow')}</p>
+                <h2 className="mt-4 font-display text-4xl font-light leading-tight text-ink sm:text-5xl">
+                  {t('home.experienceTitle')}
+                </h2>
+                <p className="mt-5 leading-relaxed text-muted">{t('home.experienceText')}</p>
+                <ul className="mt-8 space-y-4">
+                  {[t('home.sig1'), t('home.sig2'), t('home.sig3')].map((sig, i) => (
+                    <li key={sig} className="flex items-center gap-4">
+                      <span className="font-display text-2xl text-gold/70">
+                        0{i + 1}
+                      </span>
+                      <span className="h-px w-8 bg-gold/40" />
+                      <span className="font-display text-xl text-ink">{sig}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-9">
+                  <GlowLink to="/a-propos" variant="outline">
+                    {t('cta.learnMore')}
+                  </GlowLink>
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -139,7 +224,7 @@ export default function Home() {
         </Reveal>
         <div className="mt-12 columns-2 gap-4 [column-fill:_balance] lg:columns-3">
           {featured.slice(0, 6).map((item, i) => (
-            <Reveal key={item.id} delay={(i % 3) * 60} className="mb-4 block break-inside-avoid">
+            <Reveal key={item.id} variant="mask" delay={(i % 3) * 90} className="mb-4 block break-inside-avoid">
               <Link to="/galerie" className="group block overflow-hidden rounded-2xl shadow-soft">
                 <LazyImage
                   src={item.src}

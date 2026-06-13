@@ -19,11 +19,14 @@ export function Logo({ className, compact = false, dark = false }: LogoProps) {
       className={`group inline-flex items-center gap-3 ${className ?? ''}`}
       aria-label="Bellagio Event's — accueil"
     >
-      <span className="relative inline-flex flex-col items-center leading-none">
-        <GemIcon size={13} color="var(--gold)" className="mb-[-2px]" />
+      {/* Crest: gem set into a thin gold ring above the facing BB monogram */}
+      <span className="relative mt-1.5 flex h-10 w-10 items-center justify-center rounded-full border border-gold/45 transition-colors duration-300 group-hover:border-gold">
+        <span className="absolute -top-[9px]">
+          <GemIcon size={12} color="var(--gold)" />
+        </span>
         <span
-          className="font-display text-2xl italic text-gold transition-colors duration-300 group-hover:text-gold-lt"
-          style={{ letterSpacing: '-0.16em' }}
+          className="font-display text-xl italic leading-none text-gold transition-colors duration-300 group-hover:text-gold-lt"
+          style={{ letterSpacing: '-0.18em' }}
         >
           <span className="inline-block">B</span>
           <span className="inline-block" style={{ transform: 'scaleX(-1)' }}>B</span>

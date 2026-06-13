@@ -15,7 +15,7 @@ const base =
 
 const variants: Record<Variant, string> = {
   // Champagne gold CTA — works on light or dark backgrounds
-  primary: 'bg-gold text-ink hover:bg-gold-lt hover:shadow-glow active:bg-gold-dk',
+  primary: 'shine bg-gold text-ink hover:bg-gold-lt hover:shadow-glow active:bg-gold-dk',
   // Outlined for light backgrounds
   outline: 'border border-gold/45 text-ink hover:border-gold hover:bg-gold/10',
   // Outlined for dark / starlit backgrounds

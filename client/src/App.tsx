@@ -1,5 +1,6 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { initSmoothScroll } from '@/lib/smoothScroll'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { PageTransition } from '@/components/layout/PageTransition'
@@ -18,6 +19,8 @@ function RouteFallback() {
 /** Root layout: header + animated page content + footer. */
 export default function App() {
   const location = useLocation()
+
+  useEffect(() => initSmoothScroll(), [])
 
   return (
     <div className="flex min-h-screen flex-col">

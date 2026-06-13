@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
 import { useVenues } from '@/hooks/useVenue'
 import { getGallery } from '@/lib/api'
+import { stopScroll, startScroll } from '@/lib/smoothScroll'
 import type { GalleryItem, GalleryEventType, VenueSlug } from '@/data/types'
 import { buildImageUrl } from '@/lib/cloudinary'
 import { Seo } from '@/components/Seo'
@@ -51,10 +52,10 @@ export default function Gallery() {
       else if (e.key === 'ArrowLeft') step(-1)
     }
     document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
+    stopScroll()
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
+      startScroll()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lbIndex, filtered.length])
@@ -126,7 +127,8 @@ export default function Gallery() {
               return (
                 <Reveal
                   key={item.id}
-                  delay={(i % 3) * 50}
+                  variant="mask"
+                  delay={(i % 3) * 70}
                   className="mb-4 block break-inside-avoid"
                 >
                   <button
