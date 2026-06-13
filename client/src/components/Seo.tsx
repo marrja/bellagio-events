@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async'
+import { useLocation } from 'react-router-dom'
 import { buildImageUrl, buildSrcSet } from '@/lib/cloudinary'
 
 interface SeoProps {
@@ -25,8 +26,10 @@ export function Seo({
   preloadImage,
   preloadSizes = '100vw',
 }: SeoProps) {
+  const { pathname } = useLocation()
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
   const ogAbs = ogImage.startsWith('http') ? ogImage : `${SITE}${ogImage}`
+  const canonical = `${SITE}${pathname === '/' ? '/' : pathname.replace(/\/$/, '')}`
 
   return (
     <Helmet>
@@ -34,10 +37,18 @@ export function Seo({
       <meta name="description" content={description} />
       {noindex && <meta name="robots" content="noindex" />}
 
+      {/* Canonical + language alternates (language travels via ?lang=) */}
+      <link rel="canonical" href={canonical} />
+      <link rel="alternate" hrefLang="fr" href={canonical} />
+      <link rel="alternate" hrefLang="en" href={`${canonical}?lang=en`} />
+      <link rel="alternate" hrefLang="ar" href={`${canonical}?lang=ar`} />
+      <link rel="alternate" hrefLang="x-default" href={canonical} />
+
       {/* Open Graph / Twitter */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonical} />
       <meta property="og:site_name" content="Bellagio Event's" />
       <meta property="og:image" content={ogAbs} />
       <meta name="twitter:card" content="summary_large_image" />

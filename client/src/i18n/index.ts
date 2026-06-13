@@ -14,6 +14,12 @@ const STORAGE_KEY = 'bellagio.lang'
 
 function detectInitialLang(): AppLang {
   if (typeof window === 'undefined') return 'fr'
+  // 1. Shared links carry the language as ?lang= (also used by hreflang).
+  const fromUrl = new URLSearchParams(window.location.search).get('lang')
+  if (fromUrl && SUPPORTED_LANGS.includes(fromUrl as AppLang)) {
+    return fromUrl as AppLang
+  }
+  // 2. Returning visitor preference.
   const stored = window.localStorage.getItem(STORAGE_KEY)
   if (stored && SUPPORTED_LANGS.includes(stored as AppLang)) {
     return stored as AppLang
@@ -33,7 +39,7 @@ i18n.use(initReactI18next).init({
   returnNull: false,
 })
 
-/** Apply <html lang> and dir, and persist the choice. */
+/** Apply <html lang>/dir, persist the choice, and reflect it in the URL. */
 export function applyLang(lang: AppLang) {
   i18n.changeLanguage(lang)
   if (typeof document !== 'undefined') {
@@ -42,6 +48,11 @@ export function applyLang(lang: AppLang) {
   }
   if (typeof window !== 'undefined') {
     window.localStorage.setItem(STORAGE_KEY, lang)
+    // Keep ?lang= in the address bar so shared links carry the language.
+    const url = new URL(window.location.href)
+    if (lang === 'fr') url.searchParams.delete('lang')
+    else url.searchParams.set('lang', lang)
+    window.history.replaceState(window.history.state, '', url)
   }
 }
 
