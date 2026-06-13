@@ -22,7 +22,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { RevealText } from '@/components/ui/RevealText'
 import { motion } from 'framer-motion'
 
-const HERO_BG = '/venue/hall-aisle.jpg'
+const HERO_BG = '/venue/hall/hall-aisle.jpg'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -129,7 +129,7 @@ export default function Home() {
             <div className="relative lg:col-span-7">
               <Reveal variant="mask">
                 <LazyImage
-                  src="/venue/hall-kosha.jpg"
+                  src="/venue/hall/hall-kosha.jpg"
                   alt={t('home.experienceTitle')}
                   width={1080}
                   height={760}
@@ -144,7 +144,7 @@ export default function Home() {
                 className="absolute -bottom-8 end-4 hidden w-44 sm:block lg:w-56"
               >
                 <LazyImage
-                  src="/venue/table-setting.jpg"
+                  src="/venue/hall/table-setting.jpg"
                   alt=""
                   width={440}
                   height={560}

@@ -36,7 +36,7 @@ export default function About() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <LazyImage
-              src="/venue/entrance.jpg"
+              src="/venue/hall/entrance.jpg"
               alt={t('about.storyTitle')}
               width={900}
               height={1000}

@@ -7,7 +7,7 @@ const U = 'https://images.unsplash.com/'
 export const GALLERY: GalleryItem[] = [
   {
     id: 'g1',
-    src: '/venue/hall-aisle.jpg',
+    src: '/venue/hall/hall-aisle.jpg',
     mediaType: 'photo',
     venueSlug: 'la-salle',
     eventTypes: ['wedding', 'gala'],
@@ -17,7 +17,7 @@ export const GALLERY: GalleryItem[] = [
   },
   {
     id: 'g2',
-    src: '/venue/hall-kosha.jpg',
+    src: '/venue/hall/hall-kosha.jpg',
     mediaType: 'photo',
     venueSlug: 'la-salle',
     eventTypes: ['wedding'],
@@ -27,7 +27,7 @@ export const GALLERY: GalleryItem[] = [
   },
   {
     id: 'g3',
-    src: '/venue/table-setting.jpg',
+    src: '/venue/hall/table-setting.jpg',
     mediaType: 'photo',
     venueSlug: 'la-salle',
     eventTypes: ['wedding', 'gala'],
@@ -37,7 +37,7 @@ export const GALLERY: GalleryItem[] = [
   },
   {
     id: 'g4',
-    src: '/venue/entrance.jpg',
+    src: '/venue/hall/entrance.jpg',
     mediaType: 'photo',
     venueSlug: 'la-salle',
     eventTypes: ['other'],
@@ -87,7 +87,7 @@ export const GALLERY: GalleryItem[] = [
   },
   {
     id: 'g9',
-    src: '/venue/exterior-night.jpg',
+    src: '/venue/hall/exterior-night.jpg',
     mediaType: 'photo',
     venueSlug: 'la-salle',
     eventTypes: ['other'],

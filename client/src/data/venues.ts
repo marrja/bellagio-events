@@ -59,12 +59,12 @@ export const VENUES: Venue[] = [
         ar: 'إضاءة مخصّصة وصوتيات احترافية وضيافة استثنائية وتنسيق مخصّص.',
       },
     ],
-    heroImage: '/venue/hall-aisle.jpg',
+    heroImage: '/venue/hall/hall-aisle.jpg',
     galleryImages: [
-      '/venue/hall-kosha.jpg',
-      '/venue/table-setting.jpg',
-      '/venue/entrance.jpg',
-      '/venue/exterior-night.jpg',
+      '/venue/hall/hall-kosha.jpg',
+      '/venue/hall/table-setting.jpg',
+      '/venue/hall/entrance.jpg',
+      '/venue/hall/exterior-night.jpg',
     ],
     features: [
       { fr: "Kosha d'honneur avec arche florale illuminée", en: 'Stage of honour with illuminated floral arch', ar: 'كوشة شرف بقوس زهري مضيء' },

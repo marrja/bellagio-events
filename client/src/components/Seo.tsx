@@ -22,7 +22,7 @@ export function Seo({
   description,
   jsonLd,
   noindex,
-  ogImage = '/venue/hall-aisle-1600.webp',
+  ogImage = '/venue/hall/hall-aisle-1600.webp',
   preloadImage,
   preloadSizes = '100vw',
 }: SeoProps) {

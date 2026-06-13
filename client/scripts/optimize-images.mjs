@@ -5,8 +5,12 @@ import sharp from 'sharp'
 import { readdir, writeFile, mkdir } from 'node:fs/promises'
 import path from 'node:path'
 
-const SRC_DIR = path.resolve('public/venue')
-const OUT_DIR = path.resolve('public/venue')
+// Venue photography is organised by space (hall = La Salle, garden = Le Jardin).
+// NOTE: sources and generated WebP currently share this folder, and everything
+// under public/ is deployed verbatim — raw, un-renamed deliverables must be
+// triaged and renamed to the convention (e.g. entrance.jpg) before running this.
+const SRC_DIR = path.resolve('public/venue/hall')
+const OUT_DIR = path.resolve('public/venue/hall')
 const WIDTHS = [480, 768, 1080, 1600, 1920]
 
 const lqip = {}
@@ -34,7 +38,7 @@ for (const file of files) {
     .resize({ width: 24 })
     .webp({ quality: 35 })
     .toBuffer()
-  lqip[`/venue/${file}`] = `data:image/webp;base64,${buf.toString('base64')}`
+  lqip[`/venue/hall/${file}`] = `data:image/webp;base64,${buf.toString('base64')}`
   console.log(`✓ ${file}`)
 }
 
