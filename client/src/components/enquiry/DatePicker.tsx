@@ -4,9 +4,8 @@ import { useLanguageStore } from '@/store/languageStore'
 import { GemIcon } from '@/components/ui/GemIcon'
 
 interface DatePickerProps {
-  value: string // ISO yyyy-mm-dd
+  value: string
   onChange: (iso: string) => void
-  /** Returns true if a date should be greyed out / unselectable. */
   isBlocked: (iso: string) => boolean
   accentColor?: string
 }
@@ -18,7 +17,7 @@ export function DatePicker({
   value,
   onChange,
   isBlocked,
-  accentColor = '#1E82FF',
+  accentColor = 'var(--gold)',
 }: DatePickerProps) {
   const { t } = useTranslation()
   const lang = useLanguageStore((s) => s.lang)
@@ -33,18 +32,13 @@ export function DatePicker({
   })
 
   const locale = lang === 'ar' ? 'ar-TN' : lang === 'en' ? 'en-GB' : 'fr-FR'
+  const monthLabel = view.toLocaleDateString(locale, { month: 'long', year: 'numeric' })
 
-  const monthLabel = view.toLocaleDateString(locale, {
-    month: 'long',
-    year: 'numeric',
-  })
-
-  // Build the day grid (Monday-first).
   const days = useMemo(() => {
     const year = view.getFullYear()
     const month = view.getMonth()
     const first = new Date(year, month, 1)
-    const startDow = (first.getDay() + 6) % 7 // Mon = 0
+    const startDow = (first.getDay() + 6) % 7
     const daysInMonth = new Date(year, month + 1, 0).getDate()
     const cells: (Date | null)[] = []
     for (let i = 0; i < startDow; i++) cells.push(null)
@@ -63,26 +57,21 @@ export function DatePicker({
     setView((v) => new Date(v.getFullYear(), v.getMonth() + delta, 1))
 
   return (
-    <div
-      className="rounded-md border border-white/10 bg-surface/60 p-4"
-      style={{ '--accent': accentColor } as React.CSSProperties}
-    >
+    <div className="rounded-xl border border-gold/25 bg-pearl p-4">
       <div className="mb-3 flex items-center justify-between">
         <button
           type="button"
           onClick={() => shiftMonth(-1)}
-          className="flex h-8 w-8 items-center justify-center rounded-sm text-silver transition-colors hover:text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-gold/10 hover:text-ink"
           aria-label="−"
         >
           ‹
         </button>
-        <span className="font-display text-lg capitalize text-white">
-          {monthLabel}
-        </span>
+        <span className="font-display text-lg capitalize text-ink">{monthLabel}</span>
         <button
           type="button"
           onClick={() => shiftMonth(1)}
-          className="flex h-8 w-8 items-center justify-center rounded-sm text-silver transition-colors hover:text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-gold/10 hover:text-ink"
           aria-label="+"
         >
           ›
@@ -91,7 +80,7 @@ export function DatePicker({
 
       <div className="mb-2 grid grid-cols-7 gap-1 text-center">
         {weekdays.map((w) => (
-          <span key={w} className="label text-[0.55rem] text-smoke">
+          <span key={w} className="label text-[0.52rem] text-faint">
             {w}
           </span>
         ))}
@@ -113,25 +102,18 @@ export function DatePicker({
               onClick={() => onChange(iso)}
               aria-pressed={selected}
               title={blocked ? t('contact.blockedDate') : undefined}
-              className={`relative flex h-9 items-center justify-center rounded-sm text-sm transition-colors duration-150 ${
+              className={`relative flex h-9 items-center justify-center rounded-full text-sm transition-colors duration-150 ${
                 selected
-                  ? 'text-white'
+                  ? 'text-ink'
                   : disabled
-                    ? 'cursor-not-allowed text-smoke/30 line-through'
-                    : 'text-silver hover:text-white'
+                    ? 'cursor-not-allowed text-faint/40 line-through'
+                    : 'text-muted hover:bg-gold/10 hover:text-ink'
               }`}
-              style={
-                selected
-                  ? { backgroundColor: accentColor }
-                  : undefined
-              }
+              style={selected ? { backgroundColor: accentColor, color: '#2B241A' } : undefined}
             >
               {d.getDate()}
               {blocked && !past && (
-                <span
-                  className="absolute bottom-1 h-1 w-1 rounded-full bg-smoke/50"
-                  aria-hidden
-                />
+                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-faint/60" aria-hidden />
               )}
             </button>
           )
@@ -139,7 +121,7 @@ export function DatePicker({
       </div>
 
       {value && (
-        <p className="mt-3 flex items-center gap-2 text-xs text-silver">
+        <p className="mt-3 flex items-center gap-2 text-xs text-muted">
           <GemIcon size={11} color={accentColor} />
           {new Date(value).toLocaleDateString(locale, {
             weekday: 'long',

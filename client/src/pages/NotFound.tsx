@@ -11,13 +11,11 @@ export default function NotFound() {
       <section className="flex min-h-[70vh] items-center justify-center pt-24">
         <div className="container-bellagio text-center">
           <div className="glow-halo">
-            <GemIcon size={40} color="var(--electric)" className="mx-auto" />
-            <p className="mt-6 font-display text-7xl font-light text-white">404</p>
-            <h1 className="mt-2 font-display text-3xl font-light text-silver">
-              {t('notFound.title')}
-            </h1>
+            <GemIcon size={38} color="var(--gold)" className="mx-auto" />
+            <p className="mt-6 font-display text-7xl font-light text-ink">404</p>
+            <h1 className="mt-2 font-display text-3xl font-light text-muted">{t('notFound.title')}</h1>
           </div>
-          <p className="mx-auto mt-4 max-w-md text-smoke">{t('notFound.text')}</p>
+          <p className="mx-auto mt-4 max-w-md text-muted">{t('notFound.text')}</p>
           <div className="mt-8 flex justify-center">
             <GlowLink to="/" variant="primary">
               {t('notFound.back')}

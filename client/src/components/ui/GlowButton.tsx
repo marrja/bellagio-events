@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import type { ButtonHTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 
-type Variant = 'primary' | 'outline' | 'ghost'
+type Variant = 'primary' | 'outline' | 'outlineLight' | 'ghost'
 
 interface BaseProps {
   variant?: Variant
@@ -11,15 +11,16 @@ interface BaseProps {
 }
 
 const base =
-  'label text-xs sm:text-[0.8rem] inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-sm transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lt disabled:opacity-50 disabled:cursor-not-allowed'
+  'label text-[0.7rem] inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 disabled:opacity-50 disabled:cursor-not-allowed'
 
 const variants: Record<Variant, string> = {
-  // Electric blue glow CTA
-  primary:
-    'bg-electric text-white hover:bg-electric-lt hover:shadow-glow active:bg-electric-dim',
-  outline:
-    'border border-white/25 text-white hover:border-electric hover:text-electric-lt hover:shadow-glow',
-  ghost: 'text-silver hover:text-white',
+  // Champagne gold CTA — works on light or dark backgrounds
+  primary: 'bg-gold text-ink hover:bg-gold-lt hover:shadow-glow active:bg-gold-dk',
+  // Outlined for light backgrounds
+  outline: 'border border-gold/45 text-ink hover:border-gold hover:bg-gold/10',
+  // Outlined for dark / starlit backgrounds
+  outlineLight: 'border border-gold/50 text-pearl hover:border-gold-lt hover:bg-gold/15 hover:shadow-glow',
+  ghost: 'text-muted hover:text-ink',
 }
 
 function classes(variant: Variant, fullWidth?: boolean, extra?: string) {
@@ -28,7 +29,6 @@ function classes(variant: Variant, fullWidth?: boolean, extra?: string) {
     .join(' ')
 }
 
-/** Electric blue glow CTA button. */
 export const GlowButton = forwardRef<
   HTMLButtonElement,
   BaseProps & ButtonHTMLAttributes<HTMLButtonElement>
@@ -37,11 +37,7 @@ export const GlowButton = forwardRef<
   ref,
 ) {
   return (
-    <button
-      ref={ref}
-      className={classes(variant, fullWidth, className)}
-      {...rest}
-    >
+    <button ref={ref} className={classes(variant, fullWidth, className)} {...rest}>
       {children}
     </button>
   )
@@ -50,11 +46,9 @@ export const GlowButton = forwardRef<
 interface LinkButtonProps extends BaseProps {
   to: string
   children: React.ReactNode
-  /** Render as <a> for external links. */
   external?: boolean
 }
 
-/** Same look as GlowButton, rendered as a router Link (or anchor). */
 export function GlowLink({
   to,
   variant = 'primary',

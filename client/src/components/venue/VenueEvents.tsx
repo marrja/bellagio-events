@@ -24,22 +24,12 @@ export function VenueEvents({ venue }: { venue: Venue }) {
         {venue.events.map((ev, i) => (
           <Reveal key={i} delay={(i % 3) * 80}>
             <article
-              className="group h-full w-[80vw] shrink-0 snap-center rounded-md border border-white/10 bg-deep/50 p-6 transition-all duration-500 ease-out hover:bg-deep sm:w-auto"
-              style={
-                {
-                  '--accent': venue.accentColor,
-                } as React.CSSProperties
-              }
+              className="group h-full w-[80vw] shrink-0 snap-center rounded-2xl border border-gold/15 bg-cream p-6 shadow-soft transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lift sm:w-auto"
+              style={{ '--accent': venue.accentColor } as React.CSSProperties}
             >
-              <div className="transition-colors">
-                <GemIcon size={20} color={venue.accentColor} />
-              </div>
-              <h3 className="mt-4 font-display text-xl text-white">
-                {L(ev.name)}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-smoke">
-                {L(ev.description)}
-              </p>
+              <GemIcon size={20} color={venue.accentColor} />
+              <h3 className="mt-4 font-display text-2xl text-ink">{L(ev.name)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{L(ev.description)}</p>
               <span
                 className="mt-5 block h-px w-0 transition-all duration-500 ease-out group-hover:w-full"
                 style={{ backgroundColor: venue.accentColor }}

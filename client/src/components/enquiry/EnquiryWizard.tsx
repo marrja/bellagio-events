@@ -40,7 +40,6 @@ export function EnquiryWizard() {
       consent: store.consent,
     }) as EnquiryInput
 
-  /** Validate only the fields belonging to the current step. */
   function validateStep(current: number): boolean {
     const result = enquirySchema.safeParse(snapshot())
     if (result.success) {
@@ -81,9 +80,7 @@ export function EnquiryWizard() {
       })
       const name = store.name
       store.reset()
-      navigate('/contact/merci', {
-        state: { name, reference: res.reference },
-      })
+      navigate('/contact/merci', { state: { name, reference: res.reference } })
     } catch {
       setSubmitError(t('contact.errors.submit'))
       setSubmitting(false)
@@ -91,7 +88,7 @@ export function EnquiryWizard() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-2xl rounded-3xl border border-gold/15 bg-cream p-6 shadow-soft sm:p-9">
       {/* Progress indicator */}
       <ol className="mb-10 flex items-center justify-between">
         {STEP_KEYS.map((key, i) => {
@@ -103,39 +100,30 @@ export function EnquiryWizard() {
                 <span
                   className={`flex h-9 w-9 items-center justify-center rounded-full border text-sm transition-colors duration-300 ${
                     active
-                      ? 'border-electric bg-electric/15 text-electric-lt'
+                      ? 'border-gold bg-gold/15 text-gold-dk'
                       : done
-                        ? 'border-electric/50 text-electric-lt'
-                        : 'border-white/15 text-smoke'
+                        ? 'border-gold/60 text-gold-dk'
+                        : 'border-gold/25 text-faint'
                   }`}
                 >
-                  {done ? <GemIcon size={14} color="var(--electric-lt)" filled /> : i + 1}
+                  {done ? <GemIcon size={14} color="var(--gold)" filled /> : i + 1}
                 </span>
-                <span
-                  className={`label hidden text-[0.55rem] sm:block ${
-                    active ? 'text-white' : 'text-smoke'
-                  }`}
-                >
+                <span className={`label hidden text-[0.52rem] sm:block ${active ? 'text-ink' : 'text-faint'}`}>
                   {t(key)}
                 </span>
               </div>
               {i < STEP_KEYS.length - 1 && (
-                <span
-                  className={`mx-2 h-px flex-1 transition-colors duration-300 ${
-                    done ? 'bg-electric/50' : 'bg-white/10'
-                  }`}
-                />
+                <span className={`mx-2 h-px flex-1 transition-colors duration-300 ${done ? 'bg-gold/60' : 'bg-gold/20'}`} />
               )}
             </li>
           )
         })}
       </ol>
 
-      <p className="label mb-6 text-center text-[0.6rem] text-smoke sm:hidden">
+      <p className="label mb-6 text-center text-[0.58rem] text-faint sm:hidden">
         {t('contact.stepOf', { current: step + 1, total: 3 })}
       </p>
 
-      {/* Step content */}
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
@@ -156,7 +144,6 @@ export function EnquiryWizard() {
         </div>
       )}
 
-      {/* Navigation */}
       <div className="mt-10 flex items-center justify-between gap-4">
         {step > 0 ? (
           <GlowButton variant="ghost" onClick={prev} disabled={submitting}>
@@ -174,7 +161,7 @@ export function EnquiryWizard() {
           <GlowButton variant="primary" onClick={handleSubmit} disabled={submitting}>
             {submitting ? (
               <>
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink" />
                 {t('cta.submitting')}
               </>
             ) : (

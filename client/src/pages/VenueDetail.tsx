@@ -25,7 +25,7 @@ export default function VenueDetail() {
   }, [slug])
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center text-smoke">…</div>
+    return <div className="flex min-h-screen items-center justify-center text-muted">…</div>
   }
   if (!venue) return <NotFound />
 

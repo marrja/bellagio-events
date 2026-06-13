@@ -18,11 +18,7 @@ export function StepReview({ errors }: { errors: Record<string, string> }) {
 
   const tierLabel = s.tier === 'unsure' ? t('contact.tierUnsure') : s.tier
   const dateLabel = s.eventDate
-    ? new Date(s.eventDate).toLocaleDateString('fr-FR', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
+    ? new Date(s.eventDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
     : '—'
 
   const rows: [string, string][] = [
@@ -34,49 +30,38 @@ export function StepReview({ errors }: { errors: Record<string, string> }) {
     [t('contact.fields.name'), s.name || '—'],
     [t('contact.fields.email'), s.email || '—'],
     [t('contact.fields.phone'), s.phone ? `+216 ${s.phone}` : '—'],
-    [
-      t('contact.fields.preferredContact'),
-      t(`contact.contactMethods.${s.preferredContact}`),
-    ],
+    [t('contact.fields.preferredContact'), t(`contact.contactMethods.${s.preferredContact}`)],
   ]
 
   return (
     <div className="space-y-6">
-      <div className="rounded-md border border-white/10 bg-surface/50 p-6">
-        <dl className="divide-y divide-white/8">
+      <div className="rounded-2xl border border-gold/20 bg-pearl p-6 shadow-soft">
+        <dl className="divide-y divide-gold/12">
           {rows.map(([k, v]) => (
-            <div
-              key={k}
-              className="flex items-start justify-between gap-6 py-3 first:pt-0 last:pb-0"
-            >
-              <dt className="label text-[0.6rem] text-smoke">{k}</dt>
-              <dd className="max-w-[60%] text-right text-sm text-white">{v}</dd>
+            <div key={k} className="flex items-start justify-between gap-6 py-3 first:pt-0 last:pb-0">
+              <dt className="label text-[0.58rem] text-faint">{k}</dt>
+              <dd className="max-w-[60%] text-right text-sm text-ink">{v}</dd>
             </div>
           ))}
         </dl>
         {s.notes && (
-          <p className="mt-4 border-t border-white/8 pt-4 text-sm italic text-silver">
-            “{s.notes}”
-          </p>
+          <p className="mt-4 border-t border-gold/12 pt-4 text-sm italic text-muted">“{s.notes}”</p>
         )}
       </div>
 
-      {/* GDPR consent */}
       <label className="flex cursor-pointer items-start gap-3">
         <input
           type="checkbox"
           checked={s.consent}
           onChange={(e) => s.set({ consent: e.target.checked })}
-          className="mt-1 h-4 w-4 shrink-0 accent-electric"
+          className="mt-1 h-4 w-4 shrink-0 accent-gold"
         />
-        <span className="flex items-start gap-2 text-sm text-silver">
+        <span className="flex items-start gap-2 text-sm text-muted">
           <GemIcon size={12} color="var(--gold)" className="mt-0.5 shrink-0" />
           {t('contact.fields.consent')}
         </span>
       </label>
-      <FieldError
-        message={errors.consent && t(`contact.errors.${errors.consent}`)}
-      />
+      <FieldError message={errors.consent && t(`contact.errors.${errors.consent}`)} />
     </div>
   )
 }

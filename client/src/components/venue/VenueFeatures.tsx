@@ -11,32 +11,26 @@ export function VenueFeatures({ venue }: { venue: Venue }) {
   const { L } = useL()
 
   return (
-    <section className="bg-deep py-20 sm:py-28">
+    <section className="bg-cream py-20 sm:py-28">
       <div className="container-bellagio grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        {/* Left — description */}
         <Reveal>
           <div className="flex items-center gap-3">
-            <GemIcon size={16} color={venue.accentColor} />
-            <span className="label text-[0.65rem] text-gold">
-              {t('venue.aboutTitle')}
-            </span>
+            <GemIcon size={15} color={venue.accentColor} />
+            <span className="label text-[0.62rem] text-gold-dk">{t('venue.aboutTitle')}</span>
           </div>
-          <h2 className="mt-4 font-display text-4xl font-light text-white">
-            {L(venue.name)}
-          </h2>
+          <h2 className="mt-4 font-display text-4xl font-light text-ink">{L(venue.name)}</h2>
           <div className="mt-6 space-y-5">
             {venue.description.map((p, i) => (
-              <p key={i} className="leading-relaxed text-smoke">
+              <p key={i} className="leading-relaxed text-muted">
                 {L(p)}
               </p>
             ))}
           </div>
         </Reveal>
 
-        {/* Right — specification card */}
         <Reveal delay={120}>
           <div
-            className="rounded-md border border-white/10 bg-surface/60 p-7"
+            className="rounded-2xl border border-gold/20 bg-pearl p-7 shadow-soft"
             style={{ '--accent': venue.accentColor } as React.CSSProperties}
           >
             <dl className="space-y-4">
@@ -46,24 +40,20 @@ export function VenueFeatures({ venue }: { venue: Venue }) {
                 [t('common.ceiling'), L(venue.ceiling)],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-baseline justify-between gap-4">
-                  <dt className="label text-[0.6rem] text-smoke">{k}</dt>
-                  <dd className="text-right font-display text-lg text-white">
-                    {v}
-                  </dd>
+                  <dt className="label text-[0.58rem] text-faint">{k}</dt>
+                  <dd className="text-right font-display text-lg text-ink">{v}</dd>
                 </div>
               ))}
             </dl>
 
             <GoldRule className="my-6" gemColor={venue.accentColor} />
 
-            <h3 className="label mb-4 text-[0.65rem] text-gold">
-              {t('common.features')}
-            </h3>
+            <h3 className="label mb-4 text-[0.62rem] text-gold-dk">{t('common.features')}</h3>
             <ul className="space-y-3">
               {venue.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-silver">
+                <li key={i} className="flex items-start gap-3 text-sm text-muted">
                   <span className="mt-0.5 shrink-0">
-                    <GemIcon size={12} color={venue.accentColor} />
+                    <GemIcon size={11} color={venue.accentColor} />
                   </span>
                   <span>{L(f)}</span>
                 </li>

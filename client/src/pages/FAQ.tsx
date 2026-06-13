@@ -21,7 +21,6 @@ export default function FAQ() {
     getFaq().then(setFaq)
   }, [])
 
-  // Group questions by category (preserving order).
   const groups = useMemo(() => {
     const map = new Map<string, FaqItem[]>()
     for (const item of faq) {
@@ -46,38 +45,32 @@ export default function FAQ() {
         ]}
       />
 
-      <InnerHero
-        eyebrow={t('brand.name')}
-        title={t('faqPage.title')}
-        intro={t('faqPage.intro')}
-      />
+      <InnerHero eyebrow={t('brand.name')} title={t('faqPage.title')} intro={t('faqPage.intro')} />
 
       <section className="container-bellagio py-12 pb-24">
         <div className="mx-auto max-w-3xl space-y-12">
           {groups.map(([catKey, items], gi) => (
             <Reveal key={catKey} delay={gi * 60}>
               <div>
-                <h2 className="label mb-5 flex items-center gap-2 text-[0.7rem] text-gold">
+                <h2 className="label mb-5 flex items-center gap-2 text-[0.66rem] text-gold-dk">
                   <GemIcon size={14} color="var(--gold)" />
                   {L(items[0].category)}
                 </h2>
-                <div className="divide-y divide-white/8 border-y border-white/8">
+                <div className="divide-y divide-gold/15 overflow-hidden rounded-2xl border border-gold/15 bg-cream shadow-soft">
                   {items.map((item) => {
                     const id = item.question.fr
                     const isOpen = open === id
                     return (
-                      <div key={id}>
+                      <div key={id} className="px-5">
                         <button
                           type="button"
                           onClick={() => setOpen(isOpen ? null : id)}
                           aria-expanded={isOpen}
                           className="flex w-full items-center justify-between gap-4 py-5 text-left"
                         >
-                          <span className="font-display text-lg text-white">
-                            {L(item.question)}
-                          </span>
+                          <span className="font-display text-lg text-ink">{L(item.question)}</span>
                           <span
-                            className="shrink-0 text-electric transition-transform duration-300"
+                            className="shrink-0 text-gold transition-transform duration-300"
                             style={{ transform: isOpen ? 'rotate(45deg)' : 'none' }}
                             aria-hidden
                           >
@@ -93,9 +86,7 @@ export default function FAQ() {
                               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                               className="overflow-hidden"
                             >
-                              <p className="pb-5 leading-relaxed text-smoke">
-                                {L(item.answer)}
-                              </p>
+                              <p className="pb-5 leading-relaxed text-muted">{L(item.answer)}</p>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -109,7 +100,7 @@ export default function FAQ() {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-smoke">{t('home.ctaBannerText')}</p>
+          <p className="text-muted">{t('home.ctaBannerText')}</p>
           <div className="mt-5 flex justify-center">
             <GlowLink to="/contact" variant="primary">
               {t('cta.contactUs')}

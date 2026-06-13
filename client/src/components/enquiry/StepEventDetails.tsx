@@ -19,10 +19,10 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
 
   return (
     <div className="space-y-8">
-      {/* Venue selection — multi-select checkbox cards */}
+      {/* Venue selection — multi-select cards */}
       <fieldset>
         <FieldLabel required>{t('contact.fields.venues')}</FieldLabel>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           {venues.map((v) => {
             const checked = s.venues.includes(v.slug)
             return (
@@ -31,10 +31,8 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
                 type="button"
                 onClick={() => s.toggleVenue(v.slug)}
                 aria-pressed={checked}
-                className={`flex items-center gap-3 rounded-md border p-4 text-left transition-all duration-200 ${
-                  checked
-                    ? 'bg-surface'
-                    : 'border-white/12 bg-deep/40 hover:border-white/25'
+                className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-all duration-200 ${
+                  checked ? 'bg-pearl' : 'border-gold/20 bg-cream hover:border-gold/40'
                 }`}
                 style={
                   checked
@@ -42,16 +40,10 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
                     : undefined
                 }
               >
-                <GemIcon
-                  size={18}
-                  color={checked ? v.accentColor : '#8C94A2'}
-                  filled={checked}
-                />
+                <GemIcon size={18} color={checked ? v.accentColor : 'var(--faint)'} filled={checked} />
                 <span>
-                  <span className="block font-display text-base text-white">
-                    {L(v.name)}
-                  </span>
-                  <span className="text-xs text-smoke">
+                  <span className="block font-display text-base text-ink">{L(v.name)}</span>
+                  <span className="text-xs text-faint">
                     {t('common.upToGuests', { count: v.capacity })}
                   </span>
                 </span>
@@ -63,14 +55,9 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
       </fieldset>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        {/* Event type */}
         <div>
           <FieldLabel htmlFor="eventType">{t('contact.fields.eventType')}</FieldLabel>
-          <Select
-            id="eventType"
-            value={s.eventType}
-            onChange={(e) => s.set({ eventType: e.target.value })}
-          >
+          <Select id="eventType" value={s.eventType} onChange={(e) => s.set({ eventType: e.target.value })}>
             {EVENT_TYPES.map((et) => (
               <option key={et} value={et}>
                 {t(`contact.eventTypes.${et}`)}
@@ -79,14 +66,9 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
           </Select>
         </div>
 
-        {/* Package interest */}
         <div>
           <FieldLabel htmlFor="tier">{t('contact.fields.tier')}</FieldLabel>
-          <Select
-            id="tier"
-            value={s.tier}
-            onChange={(e) => s.set({ tier: e.target.value })}
-          >
+          <Select id="tier" value={s.tier} onChange={(e) => s.set({ tier: e.target.value })}>
             {TIERS.map((tier) => (
               <option key={tier.id} value={tier.id}>
                 {tier.name}
@@ -97,11 +79,10 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
         </div>
       </div>
 
-      {/* Guest count — range slider with live label */}
+      {/* Guest count slider */}
       <div>
         <FieldLabel htmlFor="guests">
-          {t('contact.fields.guests')} —{' '}
-          <span className="text-electric-lt">{s.guestCount}</span>
+          {t('contact.fields.guests')} — <span className="text-gold-dk">{s.guestCount}</span>
         </FieldLabel>
         <input
           id="guests"
@@ -111,25 +92,19 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
           step={10}
           value={s.guestCount}
           onChange={(e) => s.set({ guestCount: Number(e.target.value) })}
-          className="w-full accent-electric"
+          className="w-full accent-gold"
         />
-        <div className="mt-1 flex justify-between text-[0.6rem] text-smoke">
+        <div className="mt-1 flex justify-between text-[0.58rem] text-faint">
           <span>10</span>
           <span>600</span>
         </div>
       </div>
 
-      {/* Date picker */}
       <div>
         <FieldLabel>{t('contact.fields.date')}</FieldLabel>
-        <DatePicker
-          value={s.eventDate}
-          onChange={(iso) => s.set({ eventDate: iso })}
-          isBlocked={isBlocked}
-        />
+        <DatePicker value={s.eventDate} onChange={(iso) => s.set({ eventDate: iso })} isBlocked={isBlocked} />
       </div>
 
-      {/* Notes */}
       <div>
         <FieldLabel htmlFor="notes">{t('contact.fields.notes')}</FieldLabel>
         <Textarea

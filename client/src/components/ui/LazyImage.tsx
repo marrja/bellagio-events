@@ -61,7 +61,7 @@ export function LazyImage({
   return (
     <div
       ref={wrapRef}
-      className={`relative overflow-hidden bg-surface ${className ?? ''}`}
+      className={`relative overflow-hidden bg-sand ${className ?? ''}`}
       style={{ aspectRatio: `${width} / ${height}` }}
     >
       {inView && (

@@ -59,7 +59,7 @@ export function VenueAtmosphere({ venue }: { venue: Venue }) {
                     background: `linear-gradient(to top, ${venue.accentColor}55, transparent 60%)`,
                   }}
                 />
-                <span className="label absolute bottom-4 left-4 translate-y-2 text-[0.6rem] text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="label absolute bottom-4 left-4 translate-y-2 text-[0.58rem] text-pearl opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   {L(eventName)}
                 </span>
               </div>

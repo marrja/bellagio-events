@@ -1,32 +1,45 @@
 /* ============================================================
-   BELLAGIO EVENT'S — "Diamond Glow" design system
-   Fonts via Google Fonts @import, brand tokens as CSS custom props
+   BELLAGIO EVENT'S — "Champagne & Light" design system
+   Warm luminous ivory + champagne gold, with dramatic starlit
+   dark sections. Signature motifs: BB-diamond monogram, fairy
+   lights, illuminated butterfly, white florals, crystal glow.
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Raleway:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* ---- Brand color tokens ---- */
-  --black: #080a10; /* primary background */
-  --deep: #0d1520; /* panel / card background */
-  --surface: #121e30; /* elevated surface */
-  --electric: #1e82ff; /* primary accent, CTAs, active states */
-  --electric-lt: #50b4ff; /* hover, glow halos */
-  --electric-dim: #1060cc; /* pressed / active */
-  --gold: #c8a864; /* secondary accent, typography flourishes */
-  --gold-lt: #dcc078; /* gold highlights */
-  --gold-dk: #8c6e37; /* gold shadows */
-  --white: #fafaff; /* primary text on dark */
-  --silver: #b4bcc8; /* secondary text, labels */
-  --smoke: #8c94a2; /* body copy, descriptions */
+  /* ---- Light / luminous palette ---- */
+  --ivory: #f6f1e7; /* primary page background */
+  --cream: #fcfaf4; /* cards, elevated light surfaces */
+  --sand: #efe7d6; /* alternate section background */
+  --pearl: #fbf9f3; /* near-white */
 
-  /* Active venue accent — overridden per venue page via inline style */
-  --accent: var(--electric);
+  /* ---- Champagne gold ---- */
+  --gold: #c19a4d; /* primary accent */
+  --gold-lt: #e3cb8e; /* highlights, glow */
+  --gold-soft: #d8bd83; /* soft gold */
+  --gold-dk: #8c6e33; /* deep gold, on light text */
 
-  color-scheme: dark;
+  /* ---- Ink / text ---- */
+  --ink: #2b241a; /* primary text on light */
+  --muted: #6f6555; /* body copy on light */
+  --faint: #9a8f7c; /* labels, captions on light */
+
+  /* ---- Dark / starlit palette ---- */
+  --noir: #14110b; /* dramatic dark section background */
+  --espresso: #211a11; /* dark elevated surface */
+  --night: #0f1620; /* cool night (exterior) */
+
+  /* ---- Cool whisper (night exterior accent only) ---- */
+  --moon: #aac4da;
+
+  /* Active accent — overridable per venue/section */
+  --accent: var(--gold);
+
+  color-scheme: light;
 }
 
 @layer base {
@@ -35,14 +48,13 @@
   }
 
   body {
-    @apply bg-black text-white font-body font-light antialiased;
+    @apply bg-ivory text-ink font-body font-light antialiased;
     margin: 0;
     min-height: 100vh;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* RTL support for Arabic */
   html[dir='rtl'] body {
     direction: rtl;
   }
@@ -52,87 +64,119 @@
   h3,
   h4 {
     @apply font-display font-light;
-    line-height: 1.1;
+    line-height: 1.08;
   }
 
   ::selection {
-    background: rgba(30, 130, 255, 0.3);
-    color: var(--white);
+    background: rgba(193, 154, 77, 0.28);
+    color: var(--ink);
   }
 
-  /* Custom scrollbar — subtle, on-brand */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--black);
+    background: var(--ivory);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--surface);
+    background: var(--gold-soft);
     border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--electric-dim);
+    background: var(--gold);
   }
 }
 
 @layer components {
   /* Uppercase tracked label — nav, tags, CTAs, pills */
   .label {
-    @apply font-body font-semibold uppercase;
-    letter-spacing: 0.18em;
+    @apply font-label font-medium uppercase;
+    letter-spacing: 0.22em;
   }
 
-  /* Thin vertical LED separator line */
-  .led-line {
-    width: 1px;
-    background: rgba(30, 130, 255, 0.15);
+  /* Section container */
+  .container-bellagio {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
   }
 
-  /* Gold horizontal rule — section dividers, table borders */
+  /* Hairline gold rule */
   .gold-rule {
     height: 1px;
     background: linear-gradient(
       to right,
       transparent,
-      var(--gold) 20%,
-      var(--gold) 80%,
+      var(--gold) 18%,
+      var(--gold) 82%,
       transparent
     );
   }
 
-  /* Blue glow halo behind hero text / active items */
+  /* Warm glow halo behind hero text / focal points */
   .glow-halo {
     position: relative;
   }
   .glow-halo::before {
     content: '';
     position: absolute;
-    inset: -20% -10%;
+    inset: -22% -12%;
     background: radial-gradient(
       ellipse at center,
-      rgba(30, 130, 255, 0.22),
+      rgba(227, 203, 142, 0.3),
       transparent 70%
     );
     z-index: -1;
     pointer-events: none;
   }
 
-  /* Low-quality blur placeholder for hero images */
+  /* Shimmering gold text */
+  .text-shimmer {
+    background: linear-gradient(
+      100deg,
+      var(--gold-dk) 0%,
+      var(--gold-lt) 25%,
+      var(--gold) 50%,
+      var(--gold-lt) 75%,
+      var(--gold-dk) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+
+  /* Fairy-light strand — a row of warm twinkling dots */
+  .fairy-strand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .fairy-strand span {
+    width: 4px;
+    height: 4px;
+    border-radius: 9999px;
+    background: var(--gold-lt);
+    box-shadow: 0 0 6px 1px rgba(227, 203, 142, 0.9);
+    animation: twinkle 3.2s ease-in-out infinite;
+  }
+
+  /* Low-quality blur placeholder for blur-up image loading */
   .img-blur-up {
-    filter: blur(20px);
-    transform: scale(1.05);
-    transition: filter 600ms ease-out, transform 600ms ease-out;
+    filter: blur(18px);
+    transform: scale(1.04);
+    transition: filter 700ms ease-out, transform 700ms ease-out;
   }
   .img-blur-up.is-loaded {
     filter: blur(0);
     transform: scale(1);
   }
 
-  /* Section container */
-  .container-bellagio {
-    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  /* Dark "starlit" section base */
+  .section-noir {
+    background-color: var(--noir);
+    color: var(--pearl);
   }
 }
 
@@ -140,7 +184,12 @@
   .text-balance {
     text-wrap: balance;
   }
-  /* Respect reduced motion preference */
+
+  /* Gentle letterspacing for refined headings */
+  .tracking-elegant {
+    letter-spacing: 0.01em;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -150,5 +199,23 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
   }
 }

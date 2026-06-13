@@ -9,7 +9,7 @@ export type Lang = 'fr' | 'en' | 'ar'
 /** A string localised in the three supported languages. */
 export type Localized = Record<Lang, string>
 
-export type VenueSlug = 'la-grande-salle' | 'le-salon-prive' | 'les-jardins'
+export type VenueSlug = 'la-salle' | 'le-jardin'
 
 export type TierId = 'ESPACE' | 'LUMIERE' | 'SAVEUR' | 'PRESTIGE'
 

@@ -1,12 +1,13 @@
 import { GemIcon } from './GemIcon'
 
 interface SectionHeadingProps {
-  /** Small uppercase label above the title. */
   eyebrow?: string
   title: string
   intro?: string
   align?: 'center' | 'left'
   accentColor?: string
+  /** Render light text for dark/starlit sections. */
+  dark?: boolean
   className?: string
 }
 
@@ -17,6 +18,7 @@ export function SectionHeading({
   intro,
   align = 'center',
   accentColor,
+  dark = false,
   className,
 }: SectionHeadingProps) {
   const centered = align === 'center'
@@ -26,21 +28,26 @@ export function SectionHeading({
         className ?? ''
       }`}
     >
-      <div
-        className={`flex items-center gap-3 ${
-          centered ? 'justify-center' : ''
+      <div className={`flex items-center gap-3 ${centered ? 'justify-center' : ''}`}>
+        <span className="h-px w-8 bg-gold/50" aria-hidden />
+        <GemIcon size={14} color={accentColor ?? 'var(--gold)'} />
+        {eyebrow && (
+          <span className="label text-[0.62rem] text-gold-dk">{eyebrow}</span>
+        )}
+        <GemIcon size={14} color={accentColor ?? 'var(--gold)'} />
+        <span className="h-px w-8 bg-gold/50" aria-hidden />
+      </div>
+      <h2
+        className={`mt-5 text-balance font-display text-4xl font-light sm:text-5xl ${
+          dark ? 'text-pearl' : 'text-ink'
         }`}
       >
-        <GemIcon size={16} color={accentColor ?? 'var(--accent)'} />
-        {eyebrow && (
-          <span className="label text-[0.65rem] text-gold">{eyebrow}</span>
-        )}
-      </div>
-      <h2 className="mt-4 text-balance font-display text-4xl font-light text-white sm:text-5xl">
         {title}
       </h2>
       {intro && (
-        <p className="mt-4 text-balance text-smoke">{intro}</p>
+        <p className={`mt-4 text-balance ${dark ? 'text-pearl/70' : 'text-muted'}`}>
+          {intro}
+        </p>
       )}
     </div>
   )

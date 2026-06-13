@@ -11,9 +11,7 @@ interface TierCardProps {
   /** "à partir de X TND" price, in TND. */
   price?: number
   accentColor?: string
-  /** Where the "Demander un devis" CTA points. */
   enquireTo: string
-  /** Start expanded (used on the packages comparison page). */
   defaultOpen?: boolean
   highlight?: boolean
 }
@@ -21,7 +19,7 @@ interface TierCardProps {
 export function TierCard({
   tier,
   price,
-  accentColor = '#1E82FF',
+  accentColor = 'var(--gold)',
   enquireTo,
   defaultOpen = false,
   highlight = false,
@@ -32,41 +30,37 @@ export function TierCard({
 
   return (
     <div
-      className={`flex flex-col rounded-md border bg-deep/60 p-6 transition-colors duration-300 ${
-        highlight ? 'border-gold/60' : 'border-white/10'
+      className={`flex flex-col rounded-2xl border bg-cream p-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lift ${
+        highlight ? 'border-gold shadow-glow' : 'border-gold/15 shadow-soft'
       }`}
-      style={
-        { '--accent': accentColor } as React.CSSProperties
-      }
+      style={{ '--accent': accentColor } as React.CSSProperties}
     >
+      {highlight && (
+        <span className="label mb-3 inline-flex self-start rounded-full bg-gold/15 px-3 py-1 text-[0.55rem] text-gold-dk">
+          ★ {t('packagesPage.signature')}
+        </span>
+      )}
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="label text-sm text-white">{tier.name}</h3>
-          <p className="mt-1 font-display text-lg italic text-silver">
-            {L(tier.motto)}
-          </p>
+          <h3 className="label text-sm text-ink">{tier.name}</h3>
+          <p className="mt-1 font-display text-lg italic text-muted">{L(tier.motto)}</p>
         </div>
         <GemIcon size={20} color={accentColor} filled={highlight} />
       </div>
 
       {price !== undefined && (
-        <p className="mt-4 text-smoke">
-          <span className="text-xs uppercase tracking-wide">
-            {t('common.from')}
-          </span>{' '}
-          <span className="font-display text-2xl text-white">
-            {price.toLocaleString('fr-FR')}
-          </span>{' '}
-          <span className="text-sm text-silver">TND</span>
+        <p className="mt-4 text-muted">
+          <span className="text-[0.65rem] uppercase tracking-widest">{t('common.from')}</span>{' '}
+          <span className="font-display text-3xl text-ink">{price.toLocaleString('fr-FR')}</span>{' '}
+          <span className="text-sm text-gold-dk">TND</span>
         </p>
       )}
 
-      {/* Expandable inclusions */}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="label mt-5 flex items-center gap-2 text-[0.65rem] text-silver transition-colors hover:text-white"
+        className="label mt-5 flex items-center gap-2 text-[0.62rem] text-gold-dk transition-colors hover:text-gold"
       >
         {t('packagesPage.inclusions')}
         <span
@@ -89,17 +83,14 @@ export function TierCard({
           >
             <li className="h-3" aria-hidden />
             {tier.inclusions.map((inc, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-3 py-1.5 text-sm text-silver"
-              >
+              <li key={i} className="flex items-start gap-3 py-1.5 text-sm text-muted">
                 <span className="mt-1 shrink-0">
-                  <GemIcon size={11} color={accentColor} />
+                  <GemIcon size={10} color={accentColor} />
                 </span>
                 <span>{L(inc)}</span>
               </li>
             ))}
-            <li className="mt-3 border-t border-white/10 pt-3 text-xs italic text-smoke">
+            <li className="mt-3 border-t border-gold/15 pt-3 text-xs italic text-faint">
               {L(tier.footnote)}
             </li>
           </motion.ul>
@@ -107,7 +98,7 @@ export function TierCard({
       </AnimatePresence>
 
       <div className="mt-6 flex-1" />
-      <GlowLink to={enquireTo} variant="outline" fullWidth className="mt-2">
+      <GlowLink to={enquireTo} variant={highlight ? 'primary' : 'outline'} fullWidth className="mt-2">
         {t('cta.requestQuote')}
       </GlowLink>
     </div>

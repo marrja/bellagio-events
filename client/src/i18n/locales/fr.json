@@ -38,10 +38,11 @@
     "language": "Langue"
   },
   "home": {
-    "heroTitle": "Trois espaces. Une vision.",
-    "heroSubtitle": "Mariages · Événements · Célébrations",
+    "heroTitle": "Là où l'amour s'illumine.",
+    "heroSubtitle": "Mariages · Fiançailles · Célébrations",
+    "introQuote": "Une salle de lumière, un jardin sous les étoiles. À Bellagio Event's, chaque célébration se pare d'or et devient un souvenir éternel.",
     "venuesTitle": "Nos espaces",
-    "venuesIntro": "Trois écrins distincts, une même exigence d'excellence.",
+    "venuesIntro": "Deux écrins d'exception, une même promesse d'élégance.",
     "packagesTitle": "Nos formules",
     "packagesIntro": "De la location simple au tout-inclus Prestige.",
     "galleryTitle": "Galerie",
@@ -52,7 +53,7 @@
   },
   "venuesPage": {
     "title": "Nos espaces",
-    "intro": "Trois lieux d'exception pour donner vie à votre événement."
+    "intro": "Deux lieux d'exception pour donner vie à votre événement."
   },
   "venue": {
     "atmosphereTitle": "Atmosphère",
@@ -65,8 +66,9 @@
   },
   "packagesPage": {
     "title": "Nos formules",
-    "intro": "Quatre niveaux de prestation, disponibles dans nos trois espaces.",
+    "intro": "Quatre niveaux de prestation, disponibles dans nos deux espaces.",
     "inclusions": "Prestations incluses",
+    "signature": "Signature",
     "compareTitle": "Comparer les formules"
   },
   "eventsPage": {
@@ -96,7 +98,7 @@
     "intro": "Un domaine pensé pour l'événement d'exception.",
     "storyTitle": "Notre histoire",
     "story1": "Bellagio Event's est né d'une conviction : un grand événement mérite un grand lieu. Sur notre domaine, l'architecture contemporaine, la lumière et la nature se conjuguent pour offrir un cadre à la hauteur des plus beaux moments d'une vie.",
-    "story2": "Depuis notre ouverture, nous avons accueilli mariages, galas, lancements et célébrations privées avec une même exigence : que chaque détail serve l'émotion. Trois espaces, une équipe dédiée, et l'obsession du sur-mesure.",
+    "story2": "Depuis notre ouverture, nous avons accueilli mariages, galas, lancements et célébrations privées avec une même exigence : que chaque détail serve l'émotion. Deux espaces, une équipe dédiée, et l'obsession du sur-mesure.",
     "valuesTitle": "Nos valeurs",
     "value1Title": "Excellence",
     "value1Text": "Une production digne des plus grandes scènes, dans chaque détail.",

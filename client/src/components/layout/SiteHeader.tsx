@@ -27,28 +27,26 @@ export function SiteHeader() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close the mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [location.pathname])
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `label text-[0.7rem] transition-colors duration-200 ${
-      isActive ? 'text-electric-lt' : 'text-silver hover:text-white'
+    `label text-[0.66rem] transition-colors duration-200 ${
+      isActive ? 'text-gold-dk' : 'text-muted hover:text-ink'
     }`
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
         scrolled || menuOpen
-          ? 'bg-black/85 backdrop-blur-md border-b border-white/5'
-          : 'bg-gradient-to-b from-black/70 to-transparent'
+          ? 'border-b border-gold/15 bg-ivory/90 backdrop-blur-md'
+          : 'bg-gradient-to-b from-ivory/80 to-transparent'
       }`}
     >
-      <div className="container-bellagio flex h-[72px] items-center justify-between">
+      <div className="container-bellagio flex h-[76px] items-center justify-between">
         <Logo />
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass}>
@@ -59,8 +57,8 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-5 lg:flex">
           <LanguageSwitcher />
-          <span className="led-line h-6" aria-hidden />
-          <GlowLink to="/contact" variant="primary" className="!px-5 !py-2.5">
+          <span className="h-5 w-px bg-gold/30" aria-hidden />
+          <GlowLink to="/contact" variant="primary" className="!px-6 !py-2.5">
             {t('cta.requestVisit')}
           </GlowLink>
         </div>
@@ -73,27 +71,15 @@ export function SiteHeader() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
-          <span
-            className={`block h-[1.5px] w-6 bg-white transition-transform duration-300 ${
-              menuOpen ? 'translate-y-[6.5px] rotate-45' : ''
-            }`}
-          />
-          <span
-            className={`block h-[1.5px] w-6 bg-white transition-opacity duration-300 ${
-              menuOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block h-[1.5px] w-6 bg-white transition-transform duration-300 ${
-              menuOpen ? '-translate-y-[6.5px] -rotate-45' : ''
-            }`}
-          />
+          <span className={`block h-[1.5px] w-6 bg-ink transition-transform duration-300 ${menuOpen ? 'translate-y-[6.5px] rotate-45' : ''}`} />
+          <span className={`block h-[1.5px] w-6 bg-ink transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-[1.5px] w-6 bg-ink transition-transform duration-300 ${menuOpen ? '-translate-y-[6.5px] -rotate-45' : ''}`} />
         </button>
       </div>
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-t border-white/5 bg-black/95 backdrop-blur-md transition-[max-height] duration-500 ease-out lg:hidden ${
+        className={`overflow-hidden border-t border-gold/15 bg-ivory/97 backdrop-blur-md transition-[max-height] duration-500 ease-out lg:hidden ${
           menuOpen ? 'max-h-[80vh]' : 'max-h-0'
         }`}
       >
@@ -102,15 +88,11 @@ export function SiteHeader() {
             {t('nav.home')}
           </NavLink>
           {NAV.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={(s) => `${linkClass(s)} py-3`}
-            >
+            <NavLink key={item.to} to={item.to} className={(s) => `${linkClass(s)} py-3`}>
               {t(item.key)}
             </NavLink>
           ))}
-          <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-5">
+          <div className="mt-3 flex items-center justify-between border-t border-gold/15 pt-5">
             <LanguageSwitcher />
             <GlowLink to="/contact" variant="primary" className="!px-5 !py-2.5">
               {t('cta.requestVisit')}

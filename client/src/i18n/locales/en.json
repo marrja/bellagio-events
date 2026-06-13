@@ -38,10 +38,11 @@
     "language": "Language"
   },
   "home": {
-    "heroTitle": "Three spaces. One vision.",
-    "heroSubtitle": "Weddings · Events · Celebrations",
+    "heroTitle": "Where love comes to light.",
+    "heroSubtitle": "Weddings · Engagements · Celebrations",
+    "introQuote": "A hall of light, a garden under the stars. At Bellagio Event's, every celebration is gilded in gold and becomes an everlasting memory.",
     "venuesTitle": "Our spaces",
-    "venuesIntro": "Three distinct settings, one standard of excellence.",
+    "venuesIntro": "Two exceptional settings, one promise of elegance.",
     "packagesTitle": "Our packages",
     "packagesIntro": "From venue-only to the all-inclusive Prestige.",
     "galleryTitle": "Gallery",
@@ -52,7 +53,7 @@
   },
   "venuesPage": {
     "title": "Our spaces",
-    "intro": "Three exceptional venues to bring your event to life."
+    "intro": "Two exceptional venues to bring your event to life."
   },
   "venue": {
     "atmosphereTitle": "Atmosphere",
@@ -65,8 +66,9 @@
   },
   "packagesPage": {
     "title": "Our packages",
-    "intro": "Four service levels, available across our three spaces.",
+    "intro": "Four service levels, available across our two spaces.",
     "inclusions": "What's included",
+    "signature": "Signature",
     "compareTitle": "Compare packages"
   },
   "eventsPage": {
@@ -96,7 +98,7 @@
     "intro": "An estate built for the exceptional event.",
     "storyTitle": "Our story",
     "story1": "Bellagio Event's was born of one conviction: a great event deserves a great place. On our estate, contemporary architecture, light and nature combine to offer a setting worthy of life's most beautiful moments.",
-    "story2": "Since opening, we have hosted weddings, galas, launches and private celebrations with the same demand: that every detail serves the emotion. Three spaces, one dedicated team, and an obsession with the bespoke.",
+    "story2": "Since opening, we have hosted weddings, galas, launches and private celebrations with the same demand: that every detail serves the emotion. Two spaces, one dedicated team, and an obsession with the bespoke.",
     "valuesTitle": "Our values",
     "value1Title": "Excellence",
     "value1Text": "Production worthy of the biggest stages, in every detail.",

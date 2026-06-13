@@ -18,7 +18,7 @@ export function VenueEnquiryForm({ venue }: { venue: Venue }) {
   return (
     <section
       id="enquiry"
-      className="scroll-mt-24 bg-deep py-20 sm:py-28"
+      className="scroll-mt-24 bg-cream py-20 sm:py-28"
       style={{ '--accent': venue.accentColor } as React.CSSProperties}
     >
       <div className="container-bellagio">

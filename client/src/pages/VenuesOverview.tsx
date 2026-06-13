@@ -24,9 +24,9 @@ export default function VenuesOverview() {
     <>
       <Seo
         title="Nos espaces — Bellagio Event's"
-        description="Trois lieux d'exception : La Grande Salle, Le Salon Privé et Les Jardins."
+        description="Deux lieux d'exception : La Salle Bellagio (intérieur) et Le Jardin Bellagio (extérieur)."
         jsonLd={breadcrumbJsonLd([
-          { name: "Accueil", path: '/' },
+          { name: 'Accueil', path: '/' },
           { name: 'Nos espaces', path: '/nos-espaces' },
         ])}
       />
@@ -35,6 +35,7 @@ export default function VenuesOverview() {
         eyebrow={t('brand.name')}
         title={t('venuesPage.title')}
         intro={t('venuesPage.intro')}
+        accentColor={current?.accentColor}
       />
 
       {/* Tab switcher */}
@@ -46,12 +47,12 @@ export default function VenuesOverview() {
               type="button"
               onClick={() => setActive(i)}
               aria-pressed={i === active}
-              className={`label rounded-full border px-5 py-2.5 text-[0.65rem] transition-all duration-300 ${
-                i === active ? 'text-white' : 'border-white/15 text-smoke hover:text-white'
+              className={`label rounded-full border px-6 py-2.5 text-[0.62rem] transition-all duration-300 ${
+                i === active ? 'text-ink' : 'border-gold/25 text-faint hover:text-ink'
               }`}
               style={
                 i === active
-                  ? { borderColor: v.accentColor, boxShadow: `0 0 16px ${v.accentColor}44` }
+                  ? { borderColor: v.accentColor, boxShadow: `0 0 18px ${v.accentColor}44` }
                   : undefined
               }
             >
@@ -75,25 +76,19 @@ export default function VenuesOverview() {
                 alt={L(current.name)}
                 width={900}
                 height={680}
-                className="rounded-md"
+                className="rounded-2xl shadow-soft"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </Reveal>
             <Reveal delay={120}>
               <div>
-                <GemIcon size={24} color={current.accentColor} />
-                <h2 className="mt-4 font-display text-4xl font-light text-white">
-                  {L(current.name)}
-                </h2>
-                <p
-                  className="mt-2 font-script text-2xl"
-                  style={{ color: current.accentColor }}
-                >
+                <GemIcon size={22} color={current.accentColor} />
+                <p className="label mt-3 text-[0.6rem] text-gold-dk">{L(current.subtitle)}</p>
+                <h2 className="mt-2 font-display text-4xl font-light text-ink">{L(current.name)}</h2>
+                <p className="mt-2 font-script text-2xl" style={{ color: current.accentColor }}>
                   {L(current.tagline)}
                 </p>
-                <p className="mt-5 leading-relaxed text-smoke">
-                  {L(current.description[0])}
-                </p>
+                <p className="mt-5 leading-relaxed text-muted">{L(current.description[0])}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <VenuePill>{t('common.upToGuests', { count: current.capacity })}</VenuePill>
                   <VenuePill>{current.area}</VenuePill>
@@ -110,11 +105,11 @@ export default function VenuesOverview() {
         </section>
       )}
 
-      {/* All venues at a glance */}
+      {/* Both spaces */}
       <section className="container-bellagio pb-24">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2">
           {venues.map((v, i) => (
-            <Reveal key={v.slug} delay={(i % 3) * 80}>
+            <Reveal key={v.slug} delay={(i % 2) * 80}>
               <VenueCard venue={v} />
             </Reveal>
           ))}

@@ -50,8 +50,8 @@ export default function Gallery() {
   )
 
   const chip = (active: boolean) =>
-    `label rounded-full border px-4 py-2 text-[0.6rem] transition-all duration-300 ${
-      active ? 'border-electric text-white' : 'border-white/15 text-smoke hover:text-white'
+    `label rounded-full border px-4 py-2 text-[0.58rem] transition-all duration-300 ${
+      active ? 'border-gold bg-gold/10 text-gold-dk' : 'border-gold/25 text-faint hover:text-ink'
     }`
 
   return (
@@ -108,7 +108,7 @@ export default function Gallery() {
       {/* Masonry grid */}
       <section className="container-bellagio py-16">
         {filtered.length === 0 ? (
-          <p className="py-16 text-center text-smoke">{t('galleryPage.empty')}</p>
+          <p className="py-16 text-center text-muted">{t('galleryPage.empty')}</p>
         ) : (
           <div className="columns-2 gap-4 [column-fill:_balance] lg:columns-3">
             {filtered.map((item, i) => {
@@ -156,7 +156,7 @@ export default function Gallery() {
           >
             <button
               type="button"
-              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-2xl text-white transition-colors hover:border-electric hover:text-electric-lt"
+              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-2xl text-pearl transition-colors hover:border-gold-lt hover:text-gold-lt"
               aria-label="Fermer"
               onClick={() => setLightbox(null)}
             >
@@ -175,7 +175,7 @@ export default function Gallery() {
                 alt={L(lightbox.caption)}
                 className="max-h-[80vh] w-auto rounded-md object-contain"
               />
-              <figcaption className="mt-4 flex items-center justify-center gap-2 text-center text-sm text-silver">
+              <figcaption className="mt-4 flex items-center justify-center gap-2 text-center text-sm text-pearl/80">
                 <GemIcon size={12} color="var(--gold)" />
                 {L(lightbox.caption)}
               </figcaption>

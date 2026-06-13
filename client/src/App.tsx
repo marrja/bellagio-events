@@ -9,7 +9,7 @@ import { GemIcon } from '@/components/ui/GemIcon'
 function RouteFallback() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center pt-24">
-      <GemIcon size={28} color="var(--electric)" className="animate-pulse-glow" />
+      <GemIcon size={28} color="var(--gold)" className="animate-pulse-soft" />
     </div>
   )
 }

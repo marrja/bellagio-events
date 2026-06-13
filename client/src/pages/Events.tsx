@@ -13,14 +13,13 @@ import { Reveal } from '@/components/ui/Reveal'
 
 const TYPES: GalleryEventType[] = ['wedding', 'corporate', 'gala', 'garden', 'cocktail', 'other']
 
-// Map a venue event name (French) to a coarse category for filtering.
 function categorize(nameFr: string): GalleryEventType {
   const n = nameFr.toLowerCase()
   if (n.includes('mariage')) return 'wedding'
   if (n.includes('gala') || n.includes('prix') || n.includes('récompense')) return 'gala'
   if (n.includes('corporate') || n.includes('séminaire') || n.includes('pique')) return 'corporate'
-  if (n.includes('cocktail') || n.includes('fiançailles')) return 'cocktail'
-  if (n.includes('jardin') || n.includes('plein air') || n.includes('crépuscule') || n.includes('festival') || n.includes('patrimon')) return 'garden'
+  if (n.includes('cocktail') || n.includes('fiançailles') || n.includes('henné')) return 'cocktail'
+  if (n.includes('jardin') || n.includes('plein air') || n.includes('crépuscule') || n.includes('festival') || n.includes('chapiteau')) return 'garden'
   return 'other'
 }
 
@@ -64,81 +63,53 @@ export default function Events() {
   )
 
   const chip = (active: boolean) =>
-    `label rounded-full border px-4 py-2 text-[0.6rem] transition-all duration-300 ${
-      active ? 'text-white' : 'border-white/15 text-smoke hover:text-white'
+    `label rounded-full border px-4 py-2 text-[0.58rem] transition-all duration-300 ${
+      active ? 'border-gold bg-gold/10 text-gold-dk' : 'border-gold/25 text-faint hover:text-ink'
     }`
 
   return (
     <>
       <Seo
         title="Types d'événements — Bellagio Event's"
-        description="Mariages, galas, événements corporate et célébrations privées dans nos trois espaces."
+        description="Mariages, fiançailles, soirées de henné, galas et événements dans nos deux espaces."
         jsonLd={breadcrumbJsonLd([
           { name: 'Accueil', path: '/' },
           { name: 'Événements', path: '/evenements' },
         ])}
       />
 
-      <InnerHero
-        eyebrow={t('brand.name')}
-        title={t('eventsPage.title')}
-        intro={t('eventsPage.intro')}
-      />
+      <InnerHero eyebrow={t('brand.name')} title={t('eventsPage.title')} intro={t('eventsPage.intro')} />
 
-      {/* Filters */}
       <div className="container-bellagio space-y-3">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={() => setVenueFilter('all')}
-            className={chip(venueFilter === 'all')}
-            style={venueFilter === 'all' ? { borderColor: '#1E82FF' } : undefined}
-          >
+          <button type="button" onClick={() => setVenueFilter('all')} className={chip(venueFilter === 'all')}>
             {t('eventsPage.allVenues')}
           </button>
           {venues.map((v) => (
-            <button
-              key={v.slug}
-              type="button"
-              onClick={() => setVenueFilter(v.slug)}
-              className={chip(venueFilter === v.slug)}
-              style={venueFilter === v.slug ? { borderColor: v.accentColor } : undefined}
-            >
+            <button key={v.slug} type="button" onClick={() => setVenueFilter(v.slug)} className={chip(venueFilter === v.slug)}>
               {L(v.name)}
             </button>
           ))}
         </div>
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={() => setTypeFilter('all')}
-            className={chip(typeFilter === 'all')}
-            style={typeFilter === 'all' ? { borderColor: '#C8A864' } : undefined}
-          >
+          <button type="button" onClick={() => setTypeFilter('all')} className={chip(typeFilter === 'all')}>
             {t('eventsPage.allTypes')}
           </button>
           {TYPES.map((ty) => (
-            <button
-              key={ty}
-              type="button"
-              onClick={() => setTypeFilter(ty)}
-              className={chip(typeFilter === ty)}
-              style={typeFilter === ty ? { borderColor: '#C8A864' } : undefined}
-            >
+            <button key={ty} type="button" onClick={() => setTypeFilter(ty)} className={chip(typeFilter === ty)}>
               {t(`filters.${ty}`)}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Grid */}
       <section className="container-bellagio py-16">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((e, i) => (
             <Reveal key={`${e.venueSlug}-${e.name}`} delay={(i % 3) * 60}>
               <Link
                 to={`/espaces/${e.venueSlug}`}
-                className="group relative block overflow-hidden rounded-md"
+                className="group relative block overflow-hidden rounded-2xl shadow-soft"
                 style={{ '--accent': e.accentColor } as React.CSSProperties}
               >
                 <div className="aspect-[4/3] overflow-hidden">
@@ -151,28 +122,24 @@ export default function Events() {
                     imgClassName="transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                   />
                 </div>
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-noir/90 via-noir/30 to-transparent" />
                 <span
-                  className="pointer-events-none absolute inset-0 rounded-md border opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  className="pointer-events-none absolute inset-0 rounded-2xl border opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{ borderColor: e.accentColor }}
                 />
                 <div className="absolute inset-x-0 bottom-0 p-5">
                   <div className="flex items-center gap-2">
-                    <GemIcon size={14} color={e.accentColor} />
-                    <span className="label text-[0.55rem]" style={{ color: e.accentColor }}>
-                      {e.venueName}
-                    </span>
+                    <GemIcon size={13} color="var(--gold-lt)" />
+                    <span className="label text-[0.52rem] text-gold-lt">{e.venueName}</span>
                   </div>
-                  <h3 className="mt-2 font-display text-xl text-white">{e.name}</h3>
-                  <p className="mt-1 line-clamp-2 text-sm text-silver">{e.description}</p>
+                  <h3 className="mt-2 font-display text-xl text-pearl">{e.name}</h3>
+                  <p className="mt-1 line-clamp-2 text-sm text-pearl/75">{e.description}</p>
                 </div>
               </Link>
             </Reveal>
           ))}
         </div>
-        {filtered.length === 0 && (
-          <p className="py-16 text-center text-smoke">{t('galleryPage.empty')}</p>
-        )}
+        {filtered.length === 0 && <p className="py-16 text-center text-muted">{t('galleryPage.empty')}</p>}
       </section>
     </>
   )

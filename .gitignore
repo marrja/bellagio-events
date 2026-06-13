@@ -37,3 +37,6 @@ yarn-error.log*
 coverage/
 .cache/
 .turbo/
+
+# TypeScript build cache
+*.tsbuildinfo

@@ -20,6 +20,7 @@ export interface ImageOptions {
 }
 
 const isAbsolute = (src: string) => /^https?:\/\//.test(src)
+const isLocalAsset = (src: string) => src.startsWith('/')
 
 /**
  * Build a delivery URL for an image reference.
@@ -34,6 +35,10 @@ export function buildImageUrl(src: string, opts: ImageOptions = {}): string {
     crop = 'fill',
     dpr,
   } = opts
+
+  // Local public assets (e.g. /venue/hall.jpg) are served statically by
+  // Vite/Nginx — return untouched, no transformation params.
+  if (isLocalAsset(src)) return src
 
   // Pass-through for absolute URLs (demo seed). Apply sizing where the host
   // supports query params (Unsplash & most CDNs honour w/q/fm).

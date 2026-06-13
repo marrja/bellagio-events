@@ -10,7 +10,7 @@ export function VenuePackages({ venue }: { venue: Venue }) {
   const { t } = useTranslation()
 
   return (
-    <section id="packages" className="scroll-mt-24 bg-deep py-20 sm:py-28">
+    <section id="packages" className="scroll-mt-24 bg-sand py-20 sm:py-28">
       <div className="container-bellagio">
         <Reveal>
           <SectionHeading

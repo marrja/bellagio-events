@@ -109,9 +109,8 @@ const TIER_MULTIPLIER: Record<string, number> = {
 
 export const PACKAGE_PRICES: PackagePrice[] = (
   [
-    ['la-grande-salle', 12000],
-    ['le-salon-prive', 4500],
-    ['les-jardins', 9000],
+    ['la-salle', 9000],
+    ['le-jardin', 7500],
   ] as [VenueSlug, number][]
 ).flatMap(([venueSlug, base]) =>
   TIERS.map((tier) => ({

@@ -80,7 +80,7 @@ export default function Packages() {
 
       {/* Venue selector — prices update per venue */}
       <div className="container-bellagio">
-        <p className="label mb-3 text-center text-[0.6rem] text-smoke">
+        <p className="label mb-3 text-center text-[0.6rem] text-faint">
           {t('common.from')} · {venue ? L(venue.name) : ''}
         </p>
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
@@ -91,7 +91,7 @@ export default function Packages() {
               onClick={() => setVenueIdx(i)}
               aria-pressed={i === venueIdx}
               className={`label rounded-full border px-5 py-2.5 text-[0.65rem] transition-all duration-300 ${
-                i === venueIdx ? 'text-white' : 'border-white/15 text-smoke hover:text-white'
+                i === venueIdx ? 'text-ink' : 'border-gold/25 text-faint hover:text-ink'
               }`}
               style={
                 i === venueIdx
@@ -126,7 +126,7 @@ export default function Packages() {
       )}
 
       {/* Comparison table */}
-      <section className="bg-deep py-20 sm:py-28">
+      <section className="bg-sand py-20 sm:py-28">
         <div className="container-bellagio">
           <Reveal>
             <SectionHeading
@@ -142,26 +142,26 @@ export default function Packages() {
                     <th className="w-1/3 py-4 text-left" />
                     {TIERS.map((tier) => (
                       <th key={tier.id} className="px-4 py-4 text-center">
-                        <span className="label text-xs text-white">{tier.name}</span>
+                        <span className="label text-xs text-ink">{tier.name}</span>
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {COMPARE_ROWS.map((row, rowIdx) => (
-                    <tr key={rowIdx} className="border-t border-white/8">
-                      <td className="py-3 pr-4 text-silver">{L(row.label)}</td>
+                    <tr key={rowIdx} className="border-t border-gold/12">
+                      <td className="py-3 pr-4 text-muted">{L(row.label)}</td>
                       {TIERS.map((tier) => (
                         <td key={tier.id} className="px-4 py-3 text-center">
                           {row.tiers.includes(tier.id) ? (
                             <GemIcon
                               size={13}
-                              color={tier.id === 'PRESTIGE' ? 'var(--gold)' : 'var(--electric)'}
+                              color={tier.id === 'PRESTIGE' ? 'var(--gold)' : 'var(--gold-dk)'}
                               filled={tier.id === 'PRESTIGE'}
                               className="mx-auto"
                             />
                           ) : (
-                            <span className="text-smoke/40">—</span>
+                            <span className="text-faint/40">—</span>
                           )}
                         </td>
                       ))}
