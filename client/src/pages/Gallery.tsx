@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
@@ -28,6 +28,11 @@ export default function Gallery() {
   const [typeFilter, setTypeFilter] = useState<GalleryEventType | 'all'>('all')
   const [lbIndex, setLbIndex] = useState<number | null>(null)
 
+  // Lightbox focus management: contain Tab inside the dialog and return
+  // focus to the thumbnail that opened it.
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const openerRef = useRef<HTMLElement | null>(null)
+
   useEffect(() => {
     getGallery().then(setItems)
   }, [])
@@ -39,9 +44,33 @@ export default function Gallery() {
   )
 
   const lightbox = lbIndex != null ? filtered[lbIndex] : null
-  const close = () => setLbIndex(null)
+  const close = () => {
+    setLbIndex(null)
+    openerRef.current?.focus()
+  }
   const step = (dir: number) =>
     setLbIndex((i) => (i == null ? i : (i + dir + filtered.length) % filtered.length))
+
+  // Keep Tab / Shift+Tab cycling within the dialog's focusable controls so
+  // focus can't reach the page behind the modal.
+  const trapTab = (e: KeyboardEvent) => {
+    const root = dialogRef.current
+    if (!root) return
+    const nodes = root.querySelectorAll<HTMLElement>(
+      'button, [href], [tabindex]:not([tabindex="-1"])',
+    )
+    if (nodes.length === 0) return
+    const first = nodes[0]
+    const last = nodes[nodes.length - 1]
+    const active = document.activeElement
+    if (e.shiftKey && (active === first || !root.contains(active))) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && (active === last || !root.contains(active))) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
 
   // Keyboard nav + scroll lock while the lightbox is open.
   useEffect(() => {
@@ -50,6 +79,7 @@ export default function Gallery() {
       if (e.key === 'Escape') close()
       else if (e.key === 'ArrowRight') step(1)
       else if (e.key === 'ArrowLeft') step(-1)
+      else if (e.key === 'Tab') trapTab(e)
     }
     document.addEventListener('keydown', onKey)
     stopScroll()
@@ -133,7 +163,10 @@ export default function Gallery() {
                 >
                   <button
                     type="button"
-                    onClick={() => setLbIndex(i)}
+                    onClick={(e) => {
+                      openerRef.current = e.currentTarget
+                      setLbIndex(i)
+                    }}
                     className="group block w-full overflow-hidden rounded-md"
                     aria-label={L(item.caption)}
                   >
@@ -157,6 +190,7 @@ export default function Gallery() {
       <AnimatePresence>
         {lightbox && (
           <motion.div
+            ref={dialogRef}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 p-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
