@@ -1,0 +1,18 @@
+# Hostinger (LiteSpeed / Apache) — static SPA routing.
+# Real files and the pre-rendered per-route folders (galerie/, espaces/…, etc.)
+# are served as-is (so the SEO shells keep their own <head>); every other path
+# falls back to the app shell, so React Router deep links survive a refresh.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Long-cache the content-hashed build assets.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2?|webp|avif|png|jpe?g|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
