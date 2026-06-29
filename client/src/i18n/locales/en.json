@@ -180,9 +180,10 @@
   "merci": {
     "title": "Thank you, {{name}}!",
     "titleNoName": "Thank you!",
+    "sent": "Request sent",
     "text": "Your enquiry has been received. Our team will get back to you within 48 hours.",
-    "whatsappText": "We've prepared your enquiry on WhatsApp. If nothing opened, tap below — we reply within minutes.",
-    "openWhatsApp": "Open WhatsApp",
+    "alsoWhatsApp": "Want a faster reply? Message us directly on WhatsApp.",
+    "openWhatsApp": "Message us on WhatsApp",
     "reference": "Your reference",
     "backHome": "Back to home"
   },

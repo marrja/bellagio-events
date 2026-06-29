@@ -8,7 +8,7 @@ import { submitEnquiry } from '@/lib/api'
 import { track } from '@/lib/analytics'
 import type { VenueSlug } from '@/data/types'
 import { GemIcon } from '@/components/ui/GemIcon'
-import { GlowButton } from '@/components/ui/GlowButton'
+import { GlowButton, GlowLink } from '@/components/ui/GlowButton'
 import { FieldError } from '@/components/ui/FormField'
 import { StepEventDetails } from './StepEventDetails'
 import { StepContact } from './StepContact'
@@ -24,6 +24,7 @@ export function EnquiryWizard() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [whatsappFallback, setWhatsappFallback] = useState<string | null>(null)
 
   const snapshot = (): EnquiryInput =>
     ({
@@ -73,26 +74,25 @@ export function EnquiryWizard() {
 
     setSubmitting(true)
     setSubmitError(null)
-    try {
-      const res = await submitEnquiry({
-        ...parsed.data,
-        venues: parsed.data.venues as VenueSlug[],
-        eventDate: parsed.data.eventDate ?? '',
-      })
-      const name = store.name
-      track('Enquiry', {
-        delivered: res.delivered,
-        eventType: parsed.data.eventType,
-        venues: parsed.data.venues.join(','),
-      })
+    setWhatsappFallback(null)
+    const name = store.name
+    const res = await submitEnquiry({
+      ...parsed.data,
+      venues: parsed.data.venues as VenueSlug[],
+      eventDate: parsed.data.eventDate ?? '',
+    })
+    track('Enquiry', {
+      status: res.ok ? 'sent' : 'failed',
+      eventType: parsed.data.eventType,
+      venues: parsed.data.venues.join(','),
+    })
+    if (res.ok) {
       store.reset()
-      // Deliver via WhatsApp (the only channel), then confirm.
-      window.open(res.whatsappUrl, '_blank', 'noopener')
-      navigate('/contact/merci', {
-        state: { name, whatsappUrl: res.whatsappUrl },
-      })
-    } catch {
+      navigate('/contact/merci', { state: { name, whatsappUrl: res.whatsappUrl } })
+    } else {
+      // The form send failed — keep their input and offer WhatsApp as a fallback.
       setSubmitError(t('contact.errors.submit'))
+      setWhatsappFallback(res.whatsappUrl)
       setSubmitting(false)
     }
   }
@@ -149,8 +149,13 @@ export function EnquiryWizard() {
       </AnimatePresence>
 
       {submitError && (
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col items-center gap-4">
           <FieldError message={submitError} />
+          {whatsappFallback && (
+            <GlowLink to={whatsappFallback} external variant="outline">
+              {t('merci.openWhatsApp')}
+            </GlowLink>
+          )}
         </div>
       )}
 

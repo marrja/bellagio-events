@@ -49,19 +49,21 @@ export interface EnquiryPayload {
   consent: boolean
 }
 
-export type EnquiryResult = { delivered: 'whatsapp'; whatsappUrl: string }
+export type EnquiryResult = { ok: boolean; whatsappUrl: string }
 
 // Public Web3Forms access key — safe to expose client-side (that's by design).
 const WEB3FORMS_KEY = 'eda32d9a-6428-4ce3-bd1d-51d33411e28b'
 
-// Two channels: the enquiry is emailed to the venue via Web3Forms (so no lead
-// is lost) and the visitor is handed off to WhatsApp — this market's primary
-// channel. The email is best-effort: a failure never blocks the WhatsApp step.
+// Submit the enquiry to Web3Forms (which emails it to the venue). `ok` reflects
+// whether Web3Forms accepted it, so the UI can show a clear confirmation or an
+// error. `whatsappUrl` is always returned so WhatsApp can be offered as an
+// optional channel either way.
 export async function submitEnquiry(
   payload: EnquiryPayload,
 ): Promise<EnquiryResult> {
+  const wa = whatsappUrl(buildEnquiryWhatsApp(payload))
   try {
-    await fetch('https://api.web3forms.com/submit', {
+    const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
@@ -82,11 +84,9 @@ export async function submitEnquiry(
         Précisions: payload.notes || '—',
       }),
     })
+    const data = (await res.json().catch(() => null)) as { success?: boolean } | null
+    return { ok: res.ok && data?.success === true, whatsappUrl: wa }
   } catch {
-    // Network / Web3Forms hiccup — fall through to the WhatsApp hand-off.
-  }
-  return {
-    delivered: 'whatsapp',
-    whatsappUrl: whatsappUrl(buildEnquiryWhatsApp(payload)),
+    return { ok: false, whatsappUrl: wa }
   }
 }
