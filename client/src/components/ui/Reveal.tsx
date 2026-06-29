@@ -53,6 +53,20 @@ export function Reveal({
     }
   }
 
+  // 'mask' hides via clip-path: inset(0 0 100% 0), which also zeroes the
+  // element's own IntersectionObserver ratio — so observing the *clipped* node
+  // deadlocks: it can never reach the threshold that would reveal it, and the
+  // content (images) stays clipped forever. Observe the unclipped outer node;
+  // apply the wipe to an inner wrapper. Other variants animate opacity/transform
+  // (no clip), don't deadlock, and some pass through h-full — leave them alone.
+  if (variant === 'mask') {
+    return (
+      <Tag ref={ref as React.Ref<HTMLDivElement>} className={className}>
+        <div style={style}>{children}</div>
+      </Tag>
+    )
+  }
+
   return (
     <Tag ref={ref as React.Ref<HTMLDivElement>} className={className} style={style}>
       {children}
