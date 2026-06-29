@@ -89,11 +89,3 @@ export interface FaqItem {
   question: Localized
   answer: Localized
 }
-
-/** A blocked date returned by the availability endpoint. */
-export interface BlockedDate {
-  venueSlug: VenueSlug
-  date: string // ISO yyyy-mm-dd
-  blockType: 'booked' | 'maintenance' | 'private'
-  label?: string
-}

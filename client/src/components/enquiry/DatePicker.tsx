@@ -6,7 +6,6 @@ import { GemIcon } from '@/components/ui/GemIcon'
 interface DatePickerProps {
   value: string
   onChange: (iso: string) => void
-  isBlocked: (iso: string) => boolean
   accentColor?: string
 }
 
@@ -21,11 +20,10 @@ const fromIso = (iso: string) => {
   return new Date(y, m - 1, d)
 }
 
-/** Month-grid date picker. Blocked dates (from CMS availability) are greyed. */
+/** Month-grid date picker. Past dates are disabled. */
 export function DatePicker({
   value,
   onChange,
-  isBlocked,
   accentColor = 'var(--gold)',
 }: DatePickerProps) {
   const { t } = useTranslation()
@@ -99,9 +97,7 @@ export function DatePicker({
         {days.map((d, i) => {
           if (!d) return <span key={`e${i}`} />
           const iso = toIso(d)
-          const past = d < today
-          const blocked = isBlocked(iso)
-          const disabled = past || blocked
+          const disabled = d < today
           const selected = value === iso
           return (
             <button
@@ -110,7 +106,6 @@ export function DatePicker({
               disabled={disabled}
               onClick={() => onChange(iso)}
               aria-pressed={selected}
-              title={blocked ? t('contact.blockedDate') : undefined}
               className={`relative flex h-9 items-center justify-center rounded-full text-sm transition-colors duration-150 ${
                 selected
                   ? 'text-ink'
@@ -121,9 +116,6 @@ export function DatePicker({
               style={selected ? { backgroundColor: accentColor, color: '#2B241A' } : undefined}
             >
               {d.getDate()}
-              {blocked && !past && (
-                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-faint/60" aria-hidden />
-              )}
             </button>
           )
         })}

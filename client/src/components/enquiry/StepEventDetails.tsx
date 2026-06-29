@@ -2,7 +2,6 @@ import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useL } from '@/hooks/useL'
 import { useVenues } from '@/hooks/useVenue'
-import { useAvailability } from '@/hooks/useAvailability'
 import { useEnquiryStore } from '@/store/enquiryStore'
 import { TIERS } from '@/data/tiers'
 import { GemIcon } from '@/components/ui/GemIcon'
@@ -16,7 +15,6 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
   const { L } = useL()
   const { venues } = useVenues()
   const s = useEnquiryStore()
-  const { isBlocked } = useAvailability(s.venues)
 
   // Cap the guest slider at the largest selected venue's capacity
   // (e.g. 500 when only La Salle is chosen). Falls back to the global max.
@@ -117,7 +115,7 @@ export function StepEventDetails({ errors }: { errors: Record<string, string> })
 
       <div>
         <FieldLabel>{t('contact.fields.date')}</FieldLabel>
-        <DatePicker value={s.eventDate} onChange={(iso) => s.set({ eventDate: iso })} isBlocked={isBlocked} />
+        <DatePicker value={s.eventDate} onChange={(iso) => s.set({ eventDate: iso })} />
       </div>
 
       <div>

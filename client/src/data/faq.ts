@@ -14,8 +14,8 @@ export const FAQ: FaqItem[] = [
       ar: 'كيف أحجز موعدًا؟',
     },
     answer: {
-      fr: "Remplissez le formulaire de contact en sélectionnant votre espace et votre date souhaitée. Nous vérifions la disponibilité en temps réel et revenons vers vous sous 48 h pour planifier une visite et établir un devis.",
-      en: 'Fill in the contact form, selecting your venue and preferred date. We check availability in real time and reply within 48 hours to schedule a visit and prepare a quote.',
+      fr: "Remplissez le formulaire de contact en sélectionnant votre espace et votre date souhaitée. Nous vérifions la disponibilité et revenons vers vous sous 48 h pour planifier une visite et établir un devis.",
+      en: 'Fill in the contact form, selecting your venue and preferred date. We check availability and reply within 48 hours to schedule a visit and prepare a quote.',
       ar: 'املأ نموذج الاتصال مع اختيار المكان والتاريخ. نتحقق من التوفّر ونعود إليك خلال 48 ساعة.',
     },
   },
