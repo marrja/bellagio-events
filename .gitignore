@@ -42,4 +42,4 @@ coverage/
 *.tsbuildinfo
 
 .contact-sheets
-public/venue/source/*
+client/public/venue/source/
