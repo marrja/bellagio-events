@@ -80,7 +80,11 @@ export function LazyImage({
           alt={alt}
           width={width}
           height={height}
-          loading={eager ? 'eager' : 'lazy'}
+          // The wrapper's IntersectionObserver already defers render until near
+          // the viewport; native loading="lazy" is a redundant second gate that
+          // stalls under Lenis smooth-scroll (the img never starts loading). So
+          // once we render, load immediately. ponytail: IO is the lazy gate.
+          loading="eager"
           // @ts-expect-error fetchpriority is valid HTML but not yet in React types
           fetchpriority={eager ? 'high' : undefined}
           decoding="async"

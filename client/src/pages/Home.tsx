@@ -129,7 +129,7 @@ export default function Home() {
             <div className="relative lg:col-span-7">
               <Reveal variant="mask">
                 <LazyImage
-                  src="/venue/hall/hall-kosha.jpg"
+                  src="/venue/hall/roses-white.jpg"
                   alt={t('home.experienceTitle')}
                   width={1080}
                   height={760}
