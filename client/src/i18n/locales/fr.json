@@ -192,7 +192,8 @@
     "follow": "Suivez-nous",
     "contact": "Contact",
     "hours": "Lun – Sam · 9h – 19h",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "devBy": "Développé par"
   },
   "notFound": {
     "title": "Page introuvable",

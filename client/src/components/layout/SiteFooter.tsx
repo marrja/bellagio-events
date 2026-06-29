@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Logo } from './Logo'
 import { GemIcon } from '@/components/ui/GemIcon'
 import { FairyLights } from '@/components/ui/FairyLights'
+import { EMAIL, PHONE_DISPLAY, telUrl } from '@/lib/contact'
 
 const EXPLORE = [
   { to: '/nos-espaces', key: 'nav.venues' },
@@ -14,7 +15,6 @@ const EXPLORE = [
 
 const SOCIAL = [
   { label: 'Facebook', href: 'https://www.facebook.com/bellagioevents' },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@bellagioevents' },
 ]
 
 export function SiteFooter() {
@@ -63,13 +63,13 @@ export function SiteFooter() {
             <h4 className="label mb-4 text-[0.62rem] text-gold">{t('footer.contact')}</h4>
             <ul className="space-y-2.5 text-sm text-pearl/70">
               <li>
-                <a href="tel:+21652359900" className="transition-colors hover:text-gold-lt">
-                  +216 52 359 900
+                <a href={telUrl()} className="transition-colors hover:text-gold-lt">
+                  {PHONE_DISPLAY}
                 </a>
               </li>
               <li>
-                <a href="mailto:events@bellagioevent.com" className="transition-colors hover:text-gold-lt">
-                  events@bellagioevent.com
+                <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-gold-lt">
+                  {EMAIL}
                 </a>
               </li>
               <li className="text-pearl/50">{t('footer.hours')}</li>
@@ -87,6 +87,18 @@ export function SiteFooter() {
           </p>
           <p className="label text-[0.64rem] text-pearl/40">{t('footer.tagline')}</p>
         </div>
+
+        <p className="mt-8 text-center text-[0.6rem] tracking-elegant text-pearl/35">
+          {t('footer.devBy')}{' '}
+          <a
+            href="https://takolor.net"
+            target="_blank"
+            rel="noreferrer"
+            className="text-pearl/55 underline decoration-pearl/20 underline-offset-2 transition-colors hover:text-gold-lt"
+          >
+            TAKOLOR
+          </a>
+        </p>
       </div>
     </footer>
   )

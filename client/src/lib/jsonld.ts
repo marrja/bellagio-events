@@ -7,7 +7,7 @@ import type { Venue, FaqItem, Lang } from '@/data/types'
 const SITE_URL = 'https://bellagioevent.com'
 const ORG_NAME = "Bellagio Event's"
 const PHONE = '+216 52 359 900'
-const EMAIL = 'events@bellagioevent.com'
+const EMAIL = 'bellagioclub.events@gmail.com'
 
 export function localBusinessJsonLd() {
   return {

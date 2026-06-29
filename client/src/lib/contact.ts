@@ -4,7 +4,7 @@
 export const PHONE_DISPLAY = '+216 52 359 900'
 export const PHONE_E164 = '+21652359900'
 export const WHATSAPP_NUMBER = '21652359900' // wa.me expects digits only
-export const EMAIL = 'events@bellagioevent.com'
+export const EMAIL = 'bellagioclub.events@gmail.com'
 
 export const telUrl = () => `tel:${PHONE_E164}`
 

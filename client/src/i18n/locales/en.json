@@ -192,7 +192,8 @@
     "follow": "Follow us",
     "contact": "Contact",
     "hours": "Mon – Sat · 9am – 7pm",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "devBy": "Developed by"
   },
   "notFound": {
     "title": "Page not found",
