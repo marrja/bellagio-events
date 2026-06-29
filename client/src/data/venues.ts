@@ -62,7 +62,10 @@ export const VENUES: Venue[] = [
     heroImage: '/venue/hall/hall-aisle.jpg',
     galleryImages: [
       '/venue/hall/hall-kosha.jpg',
+      '/venue/hall/stage-gold.jpg',
+      '/venue/hall/banquet-hall.jpg',
       '/venue/hall/table-setting.jpg',
+      '/venue/hall/roses-white.jpg',
       '/venue/hall/entrance.jpg',
       '/venue/hall/exterior-night.jpg',
     ],
