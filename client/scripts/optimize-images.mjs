@@ -9,8 +9,9 @@ import path from 'node:path'
 // Sources live outside public/ (git-ignored) so raws aren't deployed; only the
 // generated WebP under public/venue/hall/ ship. LQIP is merged below so
 // regenerating a subset never drops entries whose source isn't checked in.
-const SRC_DIR = path.resolve('source-photos/hall')
-const OUT_DIR = path.resolve('public/venue/hall')
+const SPACE = process.argv[2] || 'hall' // hall = La Salle, jardin = Le Jardin
+const SRC_DIR = path.resolve(`source-photos/${SPACE}`)
+const OUT_DIR = path.resolve(`public/venue/${SPACE}`)
 const WIDTHS = [480, 768, 1080, 1600, 1920]
 
 const lqip = {}
@@ -38,7 +39,7 @@ for (const file of files) {
     .resize({ width: 24 })
     .webp({ quality: 35 })
     .toBuffer()
-  lqip[`/venue/hall/${file}`] = `data:image/webp;base64,${buf.toString('base64')}`
+  lqip[`/venue/${SPACE}/${file}`] = `data:image/webp;base64,${buf.toString('base64')}`
   console.log(`✓ ${file}`)
 }
 

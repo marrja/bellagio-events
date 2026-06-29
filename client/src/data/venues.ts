@@ -7,8 +7,6 @@ import type { Venue } from './types'
 // outdoor + supplemental shots are warm, on-brand stock.
 // ============================================================
 
-const U = 'https://images.unsplash.com/'
-
 export const VENUES: Venue[] = [
   {
     slug: 'la-salle',
@@ -137,12 +135,13 @@ export const VENUES: Venue[] = [
         ar: 'إضاءة ساحرة وتنسيق زهري وخدمة كاملة في امتداد أناقة بيلاجيو.',
       },
     ],
-    heroImage: `${U}photo-1519741497674-611481863552?auto=format&fit=crop`,
+    heroImage: '/venue/jardin/pool-day.jpg',
     galleryImages: [
-      `${U}photo-1507504031003-b417219a0fde?auto=format&fit=crop`,
-      `${U}photo-1467810563316-b5476525c0f9?auto=format&fit=crop`,
-      `${U}photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop`,
-      `${U}photo-1519225421980-715cb0215aed?auto=format&fit=crop`,
+      '/venue/jardin/pool-night.jpg',
+      '/venue/jardin/stage-garden.jpg',
+      '/venue/jardin/garden-dining.jpg',
+      '/venue/jardin/garden-path.jpg',
+      '/venue/jardin/cabana.jpg',
     ],
     features: [
       { fr: 'Jardins paysagers jusqu’à 600 invités', en: 'Landscaped grounds for up to 600 guests', ar: 'حدائق منسّقة حتى 600 ضيف' },

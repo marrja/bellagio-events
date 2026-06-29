@@ -12,8 +12,7 @@ const DIST = path.resolve('dist')
 
 const HALL_IMG = `${SITE}/venue/hall/hall-aisle-1600.webp`
 const KOSHA_IMG = `${SITE}/venue/hall/hall-kosha-1600.webp`
-const GARDEN_IMG =
-  'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=72&fm=webp'
+const GARDEN_IMG = `${SITE}/venue/jardin/pool-day-1600.webp`
 
 /** Route table — keep titles/descriptions in sync with each page's <Seo>. */
 const ROUTES = [
