@@ -12,13 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    proxy: {
-      // Proxy API + Payload admin to the Express/Payload server in dev
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-    },
   },
   build: {
     target: 'es2020',

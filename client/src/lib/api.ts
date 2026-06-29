@@ -1,10 +1,8 @@
 // ============================================================
-// Typed API layer — the SINGLE place the client talks to the backend.
-// Components must never call fetch() directly (see constraint #12).
-//
-// Each endpoint attempts the live API first, then falls back to
-// embedded seed data so the SPA is fully demonstrable standalone
-// while the CMS / Express API is still being decided.
+// Site content + the two dynamic touch-points (availability, enquiry).
+// The site is fully STATIC — there is no backend. Content is served straight
+// from src/data/*. The async signatures are kept so callers stay unchanged and
+// a real source can be slotted into one place if ever needed.
 // ============================================================
 
 import type {
@@ -14,93 +12,38 @@ import type {
   Testimonial,
   GalleryItem,
   FaqItem,
-  Tier,
 } from '@/data/types'
 import { VENUES, getVenueBySlug } from '@/data/venues'
-import { TIERS, PACKAGE_PRICES } from '@/data/tiers'
 import { TESTIMONIALS } from '@/data/testimonials'
 import { GALLERY } from '@/data/gallery'
 import { FAQ } from '@/data/faq'
 import { buildEnquiryWhatsApp, whatsappUrl } from '@/lib/contact'
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? '/api'
+// ---- Static content ----------------------------------------
+export const getVenues = async (): Promise<Venue[]> =>
+  VENUES.filter((v) => v.isActive)
 
-export class ApiError extends Error {
-  constructor(message: string, public status?: number) {
-    super(message)
-    this.name = 'ApiError'
-  }
-}
+export const getVenue = async (slug: VenueSlug): Promise<Venue | undefined> =>
+  getVenueBySlug(slug)
 
-// In-flight + resolved promise cache, keyed by path. Several components
-// (header, cards, wizard…) read the same resources; without this, every
-// mount would issue its own request once the live API exists.
-const cache = new Map<string, Promise<unknown>>()
-const CACHE_TTL = 5 * 60_000
+export const getGallery = async (): Promise<GalleryItem[]> => GALLERY
 
-/** Attempt a live request (deduped + cached); fall back to seed data. */
-function withFallback<T>(path: string, fallback: () => T): Promise<T> {
-  const hit = cache.get(path)
-  if (hit) return hit as Promise<T>
+export const getFeaturedGallery = async (): Promise<GalleryItem[]> =>
+  GALLERY.filter((g) => g.isFeatured)
 
-  const promise = (async () => {
-    try {
-      const res = await fetch(`${API_BASE}${path}`, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      if (!res.ok) throw new ApiError(`Request failed: ${path}`, res.status)
-      return (await res.json()) as T
-    } catch {
-      // CMS not wired up yet — serve embedded seed data.
-      return fallback()
-    }
-  })()
+export const getTestimonials = async (): Promise<Testimonial[]> => TESTIMONIALS
 
-  cache.set(path, promise)
-  // Expire so fresh CMS edits show up without a hard reload.
-  setTimeout(() => cache.delete(path), CACHE_TTL)
-  return promise
-}
+export const getFaq = async (): Promise<FaqItem[]> => FAQ
 
-// ---- Venues -------------------------------------------------
-export const getVenues = (): Promise<Venue[]> =>
-  withFallback('/venues', () => VENUES.filter((v) => v.isActive))
+// ---- Availability — dynamic #1 -----------------------------
+// The only dynamic *read*: which dates are already booked, so the date picker
+// can grey them out. No source is wired yet → nothing is blocked. Plug a free
+// calendar source (a published Google Calendar / Sheet) into this one function.
+export const getAvailability = async (
+  _slug: VenueSlug,
+): Promise<BlockedDate[]> => []
 
-export const getVenue = (slug: VenueSlug): Promise<Venue | undefined> =>
-  withFallback(`/venues/${slug}`, () => getVenueBySlug(slug))
-
-// ---- Tiers / pricing ---------------------------------------
-export const getTiers = (): Promise<Tier[]> =>
-  withFallback('/pricing/tiers', () => TIERS)
-
-export const getPackagePrices = () =>
-  withFallback('/pricing', () => PACKAGE_PRICES)
-
-// ---- Availability ------------------------------------------
-// Until the CMS is connected we return NO blocked dates rather than
-// fabricating "booked" days — showing fake unavailability would turn
-// real couples away. The date picker still disables past dates.
-export const getAvailability = (slug: VenueSlug): Promise<BlockedDate[]> =>
-  withFallback(`/availability?venue=${slug}`, () => [])
-
-// ---- Gallery -----------------------------------------------
-export const getGallery = (): Promise<GalleryItem[]> =>
-  withFallback('/gallery', () => GALLERY)
-
-export const getFeaturedGallery = (): Promise<GalleryItem[]> =>
-  withFallback('/gallery?featured=true', () =>
-    GALLERY.filter((g) => g.isFeatured),
-  )
-
-// ---- Testimonials ------------------------------------------
-export const getTestimonials = (): Promise<Testimonial[]> =>
-  withFallback('/testimonials', () => TESTIMONIALS)
-
-// ---- FAQ ---------------------------------------------------
-export const getFaq = (): Promise<FaqItem[]> =>
-  withFallback('/faq', () => FAQ)
-
-// ---- Enquiry submission ------------------------------------
+// ---- Enquiry — dynamic #2 ----------------------------------
 export interface EnquiryPayload {
   venues: VenueSlug[]
   tier: string
@@ -116,30 +59,16 @@ export interface EnquiryPayload {
   consent: boolean
 }
 
-// Result discriminates how the enquiry was actually delivered, so the UI
-// never claims a server received it when no backend exists yet.
-export type EnquiryResult =
-  | { delivered: 'api'; reference: string }
-  | { delivered: 'whatsapp'; whatsappUrl: string }
+export type EnquiryResult = { delivered: 'whatsapp'; whatsappUrl: string }
 
+// Enquiries are delivered through WhatsApp — this market's primary channel.
+// To ALSO capture leads by email, POST `payload` to a free form backend
+// (Formspree / Web3Forms / Netlify Forms) from this one function.
 export async function submitEnquiry(
   payload: EnquiryPayload,
 ): Promise<EnquiryResult> {
-  try {
-    const res = await fetch(`${API_BASE}/enquiries`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-    if (!res.ok) throw new ApiError('Enquiry submission failed', res.status)
-    const data = (await res.json()) as { reference: string }
-    return { delivered: 'api', reference: data.reference }
-  } catch {
-    // No backend yet: deliver the enquiry through WhatsApp (this market's
-    // primary channel) instead of pretending a server accepted it.
-    return {
-      delivered: 'whatsapp',
-      whatsappUrl: whatsappUrl(buildEnquiryWhatsApp(payload)),
-    }
+  return {
+    delivered: 'whatsapp',
+    whatsappUrl: whatsappUrl(buildEnquiryWhatsApp(payload)),
   }
 }

@@ -86,15 +86,11 @@ export function EnquiryWizard() {
         venues: parsed.data.venues.join(','),
       })
       store.reset()
-      if (res.delivered === 'whatsapp') {
-        // Open WhatsApp with the prefilled enquiry, then confirm.
-        window.open(res.whatsappUrl, '_blank', 'noopener')
-        navigate('/contact/merci', {
-          state: { name, whatsappUrl: res.whatsappUrl },
-        })
-      } else {
-        navigate('/contact/merci', { state: { name, reference: res.reference } })
-      }
+      // Deliver via WhatsApp (the only channel), then confirm.
+      window.open(res.whatsappUrl, '_blank', 'noopener')
+      navigate('/contact/merci', {
+        state: { name, whatsappUrl: res.whatsappUrl },
+      })
     } catch {
       setSubmitError(t('contact.errors.submit'))
       setSubmitting(false)
