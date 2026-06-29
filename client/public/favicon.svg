@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="12" fill="#14110B" />
-  <!-- Faceted diamond gem -->
-  <path d="M32 13 L40 20 L32 27 L24 20 Z" fill="none" stroke="#E3CB8E" stroke-width="2" stroke-linejoin="round" />
-  <path d="M24 20 L40 20" stroke="#E3CB8E" stroke-width="2" />
-  <path d="M27.5 16.5 L32 20 L36.5 16.5" stroke="#C19A4D" stroke-width="1.6" fill="none" />
-  <!-- BB monogram -->
-  <text x="32" y="50" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-style="italic" fill="#E3CB8E">B</text>
-</svg>
