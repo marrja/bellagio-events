@@ -42,7 +42,6 @@ export function localBusinessJsonLd() {
       },
     ],
     sameAs: [
-      'https://www.instagram.com/bellagioevents',
       'https://www.facebook.com/bellagioevents',
     ],
   }

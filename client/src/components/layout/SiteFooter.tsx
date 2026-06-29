@@ -13,7 +13,6 @@ const EXPLORE = [
 ]
 
 const SOCIAL = [
-  { label: 'Instagram', href: 'https://www.instagram.com/bellagioevents' },
   { label: 'Facebook', href: 'https://www.facebook.com/bellagioevents' },
   { label: 'TikTok', href: 'https://www.tiktok.com/@bellagioevents' },
 ]
