@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom'
-import { GemIcon } from '@/components/ui/GemIcon'
 
 interface LogoProps {
   className?: string
   compact?: boolean
-  /** Light text for dark backgrounds (e.g. footer). */
+  /** Light (white) emblem for dark backgrounds (e.g. footer / dark hero). */
   dark?: boolean
 }
 
 /**
- * The Bellagio emblem: the diamond gem above the facing "BB" monogram,
- * beside the wordmark — echoing the venue's gold logo.
+ * The real Bellagio Event's emblem — gem + facing "BB" monogram over the
+ * wordmark — rendered from a compressed WebP (the source vectors live in
+ * public/bellagio-events-logo{,-gold,-white}.svg). Gold on light, white on dark.
  */
 export function Logo({ className, compact = false, dark = false }: LogoProps) {
   return (
@@ -19,19 +19,13 @@ export function Logo({ className, compact = false, dark = false }: LogoProps) {
       className={`group inline-flex items-center gap-3 ${className ?? ''}`}
       aria-label="Bellagio Event's — accueil"
     >
-      {/* Crest: gem set into a thin gold ring above the facing BB monogram */}
-      <span className="relative mt-1.5 flex h-10 w-10 items-center justify-center rounded-full border border-gold/45 transition-colors duration-300 group-hover:border-gold">
-        <span className="absolute -top-[9px]">
-          <GemIcon size={12} color="var(--gold)" />
-        </span>
-        <span
-          className="font-display text-xl italic leading-none text-gold transition-colors duration-300 group-hover:text-gold-lt"
-          style={{ letterSpacing: '-0.18em' }}
-        >
-          <span className="inline-block">B</span>
-          <span className="inline-block" style={{ transform: 'scaleX(-1)' }}>B</span>
-        </span>
-      </span>
+      <img
+        src={dark ? '/logo-white.webp' : '/logo-gold.webp'}
+        alt=""
+        width={172}
+        height={240}
+        className="h-11 w-auto transition-transform duration-300 group-hover:scale-[1.04]"
+      />
       {!compact && (
         <span className="flex flex-col leading-none">
           <span
