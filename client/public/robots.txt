@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
 
-# The Payload CMS admin panel is served separately and marked noindex.
-Disallow: /admin
-
-Sitemap: https://bellagioevent.com/sitemap.xml
+Sitemap: https://bellagio-events-tn.com/sitemap.xml

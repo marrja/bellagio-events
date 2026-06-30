@@ -14,7 +14,7 @@ interface SeoProps {
   preloadSizes?: string
 }
 
-const SITE = 'https://bellagioevent.com'
+const SITE = 'https://bellagio-events-tn.com'
 
 /** Per-page <head> manager: title, description, JSON-LD, OpenGraph, preloads. */
 export function Seo({
@@ -29,7 +29,8 @@ export function Seo({
   const { pathname } = useLocation()
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
   const ogAbs = ogImage.startsWith('http') ? ogImage : `${SITE}${ogImage}`
-  const canonical = `${SITE}${pathname === '/' ? '/' : pathname.replace(/\/$/, '')}`
+  // Canonical matches the served URL form (Hostinger serves /route/ folders).
+  const canonical = `${SITE}${pathname === '/' ? '/' : pathname.replace(/\/$/, '') + '/'}`
 
   return (
     <Helmet>

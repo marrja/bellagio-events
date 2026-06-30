@@ -4,7 +4,7 @@
 
 import type { Venue, FaqItem, Lang } from '@/data/types'
 
-const SITE_URL = 'https://bellagioevent.com'
+const SITE_URL = 'https://bellagio-events-tn.com'
 const ORG_NAME = "Bellagio Event's"
 const PHONE = '+216 52 359 900'
 const EMAIL = 'bellagioclub.events@gmail.com'
