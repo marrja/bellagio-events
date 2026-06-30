@@ -37,7 +37,7 @@ const LOCAL_BUSINESS = {
       closes: '19:00',
     },
   ],
-  sameAs: ['https://www.facebook.com/bellagioevents'],
+  sameAs: ['https://www.instagram.com/bellagio.events/', 'https://www.facebook.com/bellagioevents'],
 }
 
 /** Route table — keep titles/descriptions in sync with each page's <Seo>. */
