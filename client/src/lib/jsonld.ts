@@ -23,22 +23,24 @@ export function localBusinessJsonLd() {
     priceRange: '$$$',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Route de Bizerte P8 Km 22',
+      addressLocality: 'Cebelet Ben Ammar',
+      addressRegion: 'Ariana',
+      postalCode: '2032',
       addressCountry: 'TN',
-      addressLocality: 'Tunis',
     },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 36.942757,
+      longitude: 10.087766,
+    },
+    hasMap: 'https://maps.app.goo.gl/XXNo1DWBQEbm4gAT7',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-        ],
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         opens: '09:00',
-        closes: '19:00',
+        closes: '00:00',
       },
     ],
     sameAs: [

@@ -5,6 +5,8 @@ export const PHONE_DISPLAY = '+216 52 359 900'
 export const PHONE_E164 = '+21652359900'
 export const WHATSAPP_NUMBER = '21652359900' // wa.me expects digits only
 export const EMAIL = 'bellagioclub.events@gmail.com'
+export const ADDRESS = 'Route de Bizerte P8 Km 22, Cebelet Ben Ammar, Ariana 2032'
+export const MAPS_URL = 'https://maps.app.goo.gl/XXNo1DWBQEbm4gAT7'
 
 export const telUrl = () => `tel:${PHONE_E164}`
 

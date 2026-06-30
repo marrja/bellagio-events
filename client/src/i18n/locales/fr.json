@@ -125,6 +125,8 @@
   "contact": {
     "title": "Contactez-nous",
     "intro": "Réservez une visite ou demandez un devis personnalisé.",
+    "findUs": "Nous trouver",
+    "viewOnGoogle": "Voir sur Google",
     "step1": "Votre événement",
     "step2": "Vos coordonnées",
     "step3": "Récapitulatif",
@@ -192,7 +194,7 @@
     "explore": "Explorer",
     "follow": "Suivez-nous",
     "contact": "Contact",
-    "hours": "Lun – Sam · 9h – 19h",
+    "hours": "Tous les jours · 9h – minuit",
     "rights": "Tous droits réservés.",
     "devBy": "Développé par"
   },

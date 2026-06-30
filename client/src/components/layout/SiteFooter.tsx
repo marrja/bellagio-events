@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Logo } from './Logo'
 import { GemIcon } from '@/components/ui/GemIcon'
 import { FairyLights } from '@/components/ui/FairyLights'
-import { EMAIL, PHONE_DISPLAY, telUrl } from '@/lib/contact'
+import { ADDRESS, EMAIL, MAPS_URL, PHONE_DISPLAY, telUrl } from '@/lib/contact'
 
 const EXPLORE = [
   { to: '/nos-espaces', key: 'nav.venues' },
@@ -74,7 +74,11 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="text-pearl/50">{t('footer.hours')}</li>
-              <li className="text-pearl/50">Tunisie</li>
+              <li>
+                <a href={MAPS_URL} target="_blank" rel="noreferrer" className="text-pearl/50 transition-colors hover:text-gold-lt">
+                  {ADDRESS}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

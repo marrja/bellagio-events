@@ -125,6 +125,8 @@
   "contact": {
     "title": "Contact us",
     "intro": "Book a visit or request a tailored quote.",
+    "findUs": "Find us",
+    "viewOnGoogle": "View on Google",
     "step1": "Your event",
     "step2": "Your details",
     "step3": "Review",
@@ -192,7 +194,7 @@
     "explore": "Explore",
     "follow": "Follow us",
     "contact": "Contact",
-    "hours": "Mon – Sat · 9am – 7pm",
+    "hours": "Daily · 9am – midnight",
     "rights": "All rights reserved.",
     "devBy": "Developed by"
   },
